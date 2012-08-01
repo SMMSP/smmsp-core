@@ -1,5 +1,8 @@
 language: java
 
+script: gradle assemble -S --no-color
+script: gradle check -S --no-color
+
 jdk:
  - openjdk7
  - openjdk6
