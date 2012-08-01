@@ -81,7 +81,7 @@ public class KeplerianOrbitPropTimeTests {
 	
 	@Test
 	public void testMinus60Days(){
-		GregorianCalendar test = new GregorianCalendar(2012, 8, 13, 1, 0, 0);
+		GregorianCalendar test = new GregorianCalendar(2012, 8, 13, 0, 0, 0);
 		
 		Assert.assertEquals(-60.0, kep.getPropogationTime(test));
 	}
