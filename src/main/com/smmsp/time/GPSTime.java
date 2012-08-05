@@ -18,7 +18,7 @@
  * see
  * http://www.seanmadden.net/licensing for details.
  */
-package com.smmsp.core;
+package com.smmsp.time;
 
 /**
  * This class represents the concept of GPS Time. GPS time represents
@@ -37,7 +37,7 @@ public class GPSTime {
 	/**
 	 * How many milliseconds into the current GPS week are we?
 	 */
-	private int					_millisecOfCurrentWeek	= 0;
+	private long				_millisecOfCurrentWeek	= 0;
 
 	/**
 	 * Number of milliseconds in a single GPS week
@@ -52,7 +52,7 @@ public class GPSTime {
 
 	}
 
-	public GPSTime(int fullGPSWeek, int millisIntoWeek) {
+	public GPSTime(int fullGPSWeek, long millisIntoWeek) {
 		_fullGPSWeek = fullGPSWeek;
 		_millisecOfCurrentWeek = millisIntoWeek;
 	}
@@ -81,24 +81,23 @@ public class GPSTime {
 	 * 
 	 * @return _millisecOfCurrentWeek the _millisecOfCurrentWeek
 	 */
-	public synchronized int getMillisecOfCurrentWeek() {
+	public synchronized long getMillisecOfCurrentWeek() {
 		return _millisecOfCurrentWeek;
 	}
 
 	/**
 	 * Sets the _millisecOfCurrentWeek
 	 * 
-	 * @param _millisecOfCurrentWeek
+	 * @param l
 	 *            the _millisecOfCurrentWeek to set
 	 */
-	public synchronized void setMillisecOfCurrentWeek(
-			int _millisecOfCurrentWeek) {
-		this._millisecOfCurrentWeek = _millisecOfCurrentWeek;
+	public synchronized void setMillisecOfCurrentWeek(long l) {
+		this._millisecOfCurrentWeek = l;
 	}
 
 	public synchronized GPSTime add(GPSTime other) {
 		int week = _fullGPSWeek + other.getFullGPSWeek();
-		int millis = _millisecOfCurrentWeek
+		long millis = _millisecOfCurrentWeek
 				+ other.getMillisecOfCurrentWeek();
 
 		// compute rollover bits
@@ -106,7 +105,7 @@ public class GPSTime {
 			week += adjustedRolloverWeeks(millis);
 			millis = adjustedRolloverMillis(millis);
 		} else if (millis < 0) {
-			week -= adjustedRolloverWeeks(millis);
+			week -= adjustedRolloverWeeks(millis) + 1;
 			millis = (int)MILLIS_IN_WEEK - adjustedRolloverMillis(millis);
 		}
 
@@ -136,8 +135,7 @@ public class GPSTime {
 	 * @return new GPSTime of result
 	 */
 	public synchronized GPSTime addSec(int seconds) {
-		return new GPSTime(_fullGPSWeek, seconds * 1000
-				+ _millisecOfCurrentWeek);
+		return addMillis(1000*seconds);
 	}
 
 	/**
@@ -158,9 +156,8 @@ public class GPSTime {
 	 *            Milliseconds to add
 	 * @return new GPSTime of result
 	 */
-	public synchronized GPSTime addMillis(int millis) {
-		return new GPSTime(_fullGPSWeek, _millisecOfCurrentWeek
-				+ millis);
+	public synchronized GPSTime addMillis(long millis) {
+		return add(new GPSTime(0, millis));
 	}
 
 	/**
@@ -170,7 +167,7 @@ public class GPSTime {
 	 *            number of milliseconds to subtract (go back in time)
 	 * @return new GPSTime of result
 	 */
-	public GPSTime subtractMillis(int millis) {
+	public GPSTime subtractMillis(long millis) {
 		return addMillis(-1 * millis);
 	}
 
@@ -183,8 +180,8 @@ public class GPSTime {
 	 *            Number of Millis to truncate
 	 * @return Truncated Millis
 	 */
-	public static int adjustedRolloverMillis(long millis) {
-		return (int)(Math.abs(millis) % MILLIS_IN_WEEK);
+	public static long adjustedRolloverMillis(long millis) {
+		return Math.abs(millis) % MILLIS_IN_WEEK;
 	}
 
 	/**
@@ -196,7 +193,7 @@ public class GPSTime {
 	 * @return Whole number of weeks
 	 */
 	public static int adjustedRolloverWeeks(long millis) {
-		millis = Math.abs(millis); // handle negatives.
+		millis = Math.abs(millis);
 		long fulls = millis - adjustedRolloverMillis(millis);
 		return (int)(fulls / MILLIS_IN_WEEK);
 	}
@@ -212,7 +209,7 @@ public class GPSTime {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + _fullGPSWeek;
-		result = prime * result + _millisecOfCurrentWeek;
+		result = prime * result + (int)_millisecOfCurrentWeek;
 		return result;
 	}
 
