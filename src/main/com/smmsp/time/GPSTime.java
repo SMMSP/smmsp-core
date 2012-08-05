@@ -18,7 +18,7 @@
  * see
  * http://www.seanmadden.net/licensing for details.
  */
-package com.smmsp.core;
+package com.smmsp.time;
 
 /**
  * This class represents the concept of GPS Time. GPS time represents

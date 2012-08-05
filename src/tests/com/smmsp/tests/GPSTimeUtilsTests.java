@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.smmsp.core.GPSTime;
+import com.smmsp.time.GPSTime;
 
 /**
  * Tests the GPSTime Utility functions
