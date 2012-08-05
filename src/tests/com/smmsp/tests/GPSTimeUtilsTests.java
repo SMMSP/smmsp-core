@@ -47,42 +47,42 @@ public class GPSTimeUtilsTests {
 
 	@Test
 	public void testAdjustedMilliRollover1() {
-		int millis = GPSTime.adjustedRolloverMillis(GPSTime.MILLIS_IN_WEEK + 1);
+		long millis = GPSTime.adjustedRolloverMillis(GPSTime.MILLIS_IN_WEEK + 1);
 		
 		assertEquals(1, millis);
 	}
 
 	@Test
 	public void testAdjustedMilliRollover2(){
-		int millis = GPSTime.adjustedRolloverMillis(GPSTime.MILLIS_IN_WEEK *2 -1);
+		long millis = GPSTime.adjustedRolloverMillis(GPSTime.MILLIS_IN_WEEK *2 -1);
 		
 		assertEquals(GPSTime.MILLIS_IN_WEEK -1, millis);
 	}
 	
 	@Test
 	public void testAdjustedMilliRollover3(){
-		int millis = GPSTime.adjustedRolloverMillis(0);
+		long millis = GPSTime.adjustedRolloverMillis(0);
 		
 		assertEquals(0, millis);
 	}
 	
 	@Test
 	public void testAdjustedMilliRollover4(){
-		int millis = GPSTime.adjustedRolloverMillis(-1 * GPSTime.MILLIS_IN_WEEK);
+		long millis = GPSTime.adjustedRolloverMillis(-1 * GPSTime.MILLIS_IN_WEEK);
 		
 		assertEquals(0, millis);
 	}
 	
 	@Test
 	public void testAdjustedMilliRollover5(){
-		int millis = GPSTime.adjustedRolloverMillis(-1 * GPSTime.MILLIS_IN_WEEK -1);
+		long millis = GPSTime.adjustedRolloverMillis(-1 * GPSTime.MILLIS_IN_WEEK -1);
 		
 		assertEquals(1, millis);
 	}
 	
 	@Test
 	public void testAdjustedMilliRollover6(){
-		int millis = GPSTime.adjustedRolloverMillis(-5 * GPSTime.MILLIS_IN_WEEK);
+		long millis = GPSTime.adjustedRolloverMillis(-5 * GPSTime.MILLIS_IN_WEEK);
 		
 		assertEquals(0, millis);
 	}
