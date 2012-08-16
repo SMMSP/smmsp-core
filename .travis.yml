@@ -1,6 +1,17 @@
 language: java
 
+before_script:
+  - "wget http://services.gradle.org/distributions/gradle-1.1-bin.zip"
+  - "unzip gradle-1.1-bin.zip > /dev/null"
+script: "gradle-1.1/bin/gradle assemble -S --no-color"
+script: "gradle-1.1/bin/gradle check -S --no-color"
+
 jdk:
-  - openjdk7
-  - openjdk6
-  - oraclejdk7
+ - openjdk7
+ - openjdk6
+ - oraclejdk7
+
+notifications:
+ email:
+  recipients:
+    - smmsp@seanmadden.net
