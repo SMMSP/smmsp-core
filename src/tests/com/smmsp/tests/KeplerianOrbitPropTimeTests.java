@@ -22,14 +22,14 @@
 */
 package com.smmsp.tests;
 
-import java.util.GregorianCalendar;
-
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.smmsp.astro.KeplerianOrbit;
+import com.smmsp.time.TimeException;
+import com.smmsp.time.UnixTime;
 
 /**
  * JUnit test to run through the 
@@ -47,83 +47,82 @@ public class KeplerianOrbitPropTimeTests {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		kep = new KeplerianOrbit();
-		kep.set_epoch(new GregorianCalendar(2012, 10, 12));
+		kep = new KeplerianOrbit(new UnixTime(2012, 10, 12));
 	}
 
 	@Test
-	public void testEqualDates() { 
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 12);
+	public void testEqualDates() throws TimeException { 
+		UnixTime test = new UnixTime(2012, 10, 12);
 		
 		Assert.assertEquals(0.0, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testPlusOneDate(){
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 13);
+	public void testPlusOneDate() throws TimeException{
+		UnixTime test = new UnixTime(2012, 10, 13);
 		
 		Assert.assertEquals(1.0, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testMinusOneDate(){
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 11);
+	public void testMinusOneDate() throws TimeException{
+		UnixTime test = new UnixTime(2012, 10, 11);
 		
 		Assert.assertEquals(-1.0, kep.getPropogationTime(test));
 	}
 
 	@Test
-	public void testPlus60Days(){
-		GregorianCalendar test = new GregorianCalendar(2012, 12, 11);
+	public void testPlus60Days() throws TimeException{
+		UnixTime test = new UnixTime(2012, 12, 11);
 		
 		Assert.assertEquals(60.0, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testMinus60Days(){
-		GregorianCalendar test = new GregorianCalendar(2012, 8, 13, 0, 0, 0);
+	public void testMinus60Days() throws TimeException{
+		UnixTime test = new UnixTime(2012, 8, 13, 0, 0, 0);
 		
 		Assert.assertEquals(-60.0, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testPlus12Hours(){
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 12, 12, 0, 0);
+	public void testPlus12Hours() throws TimeException{
+		UnixTime test = new UnixTime(2012, 10, 12, 12, 0, 0);
 		
 		Assert.assertEquals(.50, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testMinus12Hours(){
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 11, 12, 0, 0);
+	public void testMinus12Hours() throws TimeException{
+		UnixTime test = new UnixTime(2012, 10, 11, 12, 0, 0);
 		
 		Assert.assertEquals(-0.50, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testPlus36Minutes(){
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 12, 0, 36, 0);
+	public void testPlus36Minutes() throws TimeException{
+		UnixTime test = new UnixTime(2012, 10, 12, 0, 36, 0);
 		
 		Assert.assertEquals(0.025, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testMinus36Minutes(){
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 11, 23, 24, 0);
+	public void testMinus36Minutes() throws TimeException{
+		UnixTime test = new UnixTime(2012, 10, 11, 23, 24, 0);
 		
 		Assert.assertEquals(-0.025, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testPlus54Seconds(){
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 12, 0, 0, 54);
+	public void testPlus54Seconds() throws TimeException{
+		UnixTime test = new UnixTime(2012, 10, 12, 0, 0, 54);
 		
 		Assert.assertEquals(0.000625, kep.getPropogationTime(test));
 	}
 	
 	@Test
-	public void testMinus54Seconds(){
-		GregorianCalendar test = new GregorianCalendar(2012, 10, 11, 23, 59, 6);
+	public void testMinus54Seconds() throws TimeException{
+		UnixTime test = new UnixTime(2012, 10, 11, 23, 59, 6);
 		
 		Assert.assertEquals(-0.000625, kep.getPropogationTime(test));
 	}
