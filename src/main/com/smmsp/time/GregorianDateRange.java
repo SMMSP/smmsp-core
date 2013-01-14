@@ -3,6 +3,7 @@
  */
 package com.smmsp.time;
 
+
 /**
  * @author sean
  *
@@ -24,7 +25,14 @@ public class GregorianDateRange {
 	}
 	
 	public boolean isWithinRange(GregorianDate date){
-		
-		return false;
+		throw new UnsupportedOperationException();
+	}
+	
+	public boolean isBefore(GregorianDate date){
+		throw new UnsupportedOperationException();
+	}
+	
+	public boolean isAfter(GregorianDate date){
+		throw new UnsupportedOperationException();
 	}
 }

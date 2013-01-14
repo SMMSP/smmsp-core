@@ -3,8 +3,6 @@
  */
 package com.smmsp.time;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 /**
  * @author sean
  *
@@ -120,7 +118,7 @@ public class UnixTime implements TimeInstant{
 
 	@Override
 	public GPSTime toGPSTime() {
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
