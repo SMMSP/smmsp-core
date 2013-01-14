@@ -8,7 +8,6 @@ script: "gradle-1.1/bin/gradle check -S --no-color"
 
 jdk:
  - openjdk7
- - openjdk6
  - oraclejdk7
 
 notifications:
