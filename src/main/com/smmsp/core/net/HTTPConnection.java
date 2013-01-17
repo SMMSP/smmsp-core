@@ -25,6 +25,7 @@ package com.smmsp.core.net;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -33,7 +34,7 @@ import java.net.URL;
  *
  * @author Sean P Madden
  */
-public class HTTPConnection  {
+public class HTTPConnection extends InternetConnection {
 
 	private URL _url = null;
 	
@@ -46,6 +47,18 @@ public class HTTPConnection  {
 		this._url = u;
 	}
 	
+	/**
+	 * Constructor
+	 * @param url
+	 * @throws MalformedURLException
+	 */
+	public HTTPConnection(String url) throws MalformedURLException{
+		_url = new URL(url);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.smmsp.core.net.InternetConnection#getDataStream()
+	 */
 	public InputStream getDataStream(){
 		if(_url == null){
 			return null;
