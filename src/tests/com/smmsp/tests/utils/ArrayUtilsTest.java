@@ -42,5 +42,30 @@ public class ArrayUtilsTest {
 		final int[] result = ArrayUtils.combine(first, second, third);
 		assertTrue(Arrays.equals(result,expected));
 	}
+	
+	@Test 
+	public final void testCombine2(){
+		final byte[] first = new byte[]{0x0, 0x2};
+		final byte[] second = new byte[]{0x1, 0x3};
+		
+		final byte[] expected = new byte[]{0x00, 0x02, 0x01, 0x03};
+		
+		final byte[] result = ArrayUtils.combine(first, second);
+		
+		assertTrue(Arrays.equals(result, expected));
+	}
+	
+	@Test
+	public final void testCombine3(){
+		final byte[] first = new byte[]{0x0};
+		final byte[] second = new byte[]{0x01};
+		final byte[] third = new byte[]{0x02};
+		
+		final byte[] expected = new byte[]{0x00, 0x01, 0x02};
+		
+		final byte[] result = ArrayUtils.combine(first, second, third);
+		
+		assertTrue(Arrays.equals(result,expected));
+	}
 
 }

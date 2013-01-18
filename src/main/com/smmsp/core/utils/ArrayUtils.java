@@ -3,27 +3,12 @@
  */
 package com.smmsp.core.utils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 /**
  * @author sean
  *
  */
 public abstract class ArrayUtils {
 
-	@SafeVarargs
-	@SuppressWarnings("unchecked")
-	public static <T> T[] combine(final T[]... arrays){
-		final ArrayList<T> combined = new ArrayList<T>();
-		
-		for(final T[] array : arrays){
-			Collections.addAll(combined, array);
-		}
-		
-		return (T[])combined.toArray();
-	}
-	
 	public static int[] combine(final int[]... arrays){
 		int[] combined = new int[0];
 		for(int[] arr : arrays){
@@ -47,7 +32,7 @@ public abstract class ArrayUtils {
 	public static byte[] combine(final byte[]... arrays){
 		byte[] combined = new byte[0];
 		for(byte[] arr : arrays){
-			combine(combined, arr);
+			combined = combine(combined, arr);
 		}
 		return combined;
 	}
