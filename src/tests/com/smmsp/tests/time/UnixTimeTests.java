@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.smmsp.tests;
+package com.smmsp.tests.time;
 
 import static org.junit.Assert.*;
 
