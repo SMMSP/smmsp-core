@@ -17,7 +17,6 @@ public class UnixTime implements TimeInstant{
 	private int _hours = 0;
 	private int _minutes = 0;
 	private int _seconds = 0;
-	private int _nanos = 0;
 	
 	/**
 	 * Empty constructor - defaults to 1/1/1970
@@ -50,27 +49,6 @@ public class UnixTime implements TimeInstant{
 		this._minutes = _minutes;
 		this._seconds = _seconds;
 	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param _years
-	 * @param _months
-	 * @param _days
-	 * @param _hours
-	 * @param _minutes
-	 * @param _seconds
-	 * @param _nanos
-	 */
-	public UnixTime(int _years, int _months, int _days, int _hours,
-			int _minutes, int _seconds, int _nanos) {
-		this(_years, _months, _days);
-		this._hours = _hours;
-		this._minutes = _minutes;
-		this._seconds = _seconds;
-		this._nanos = _nanos;
-	}
-	
 
 	
 	/**
