@@ -39,6 +39,16 @@ public class GregorianDate {
 	}
 	
 	public GregorianDate(int years, int months, int days){
+		if(months > 12 || months < 1){
+			throw new IllegalArgumentException("Invalid month range");
+		}
+		if(days > TimeConstants.GetDaysInMonth(months, isLeapYear(years))
+				|| days < 1){
+			throw new IllegalArgumentException(
+					"Invalid day in month " + months + 
+					" (" + days + ")");
+		}
+		
 		_years = years;
 		_months = months;
 		_days = days;
@@ -89,4 +99,12 @@ public class GregorianDate {
 		return false;
 		
 	}
+
+	@Override
+	public String toString() {
+		return "GregorianDate [year=" + _years + ", month=" + _months
+				+ ", day=" + _days + "]";
+	}
+	
+	
 }
