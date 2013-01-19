@@ -53,4 +53,9 @@ public class GregorianDateRange {
 	public boolean isAfter(GregorianDate date){
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public String toString() {
+		return "GregorianDateRange [start=" + _start + ", end=" + _end + "]";
+	}
 }

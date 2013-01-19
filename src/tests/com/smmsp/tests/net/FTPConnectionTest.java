@@ -31,6 +31,7 @@ public class FTPConnectionTest {
 		while((line = reader.readLine()) != null){
 			System.out.print(line);
 		}
+		
 	}
 
 }
