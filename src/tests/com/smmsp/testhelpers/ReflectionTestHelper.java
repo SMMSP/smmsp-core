@@ -43,4 +43,27 @@ public abstract class ReflectionTestHelper {
 		return obj;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <T, R> T GetPrivateStaticVariable(
+			Class<R> clazz, String variable){
+		T obj = null;
+		try {
+			Field f = clazz.getDeclaredField(variable);
+			boolean accessible = f.isAccessible();
+			f.setAccessible(true);
+			obj = (T) f.get(null);
+			f.setAccessible(accessible);
+			
+		} catch ( NoSuchFieldException e){
+			e.printStackTrace();
+		} catch (SecurityException |
+				IllegalArgumentException |
+				IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return obj;
+	}
+	
 }
