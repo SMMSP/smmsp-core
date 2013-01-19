@@ -21,7 +21,9 @@
  */
 package com.smmsp.core.utils;
 
+import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -183,5 +185,17 @@ public abstract class OSAPI {
 	 */
 	public static String getOSName(){
 		return _INTERNAL.toString();
+	}
+	
+	/**
+	 * Ensures that the cache directory exists, if it doesn't, then
+	 * make it.
+	 * @throws IOException
+	 */
+	public static void ensureCacheDirExists() throws IOException{
+		Path cacheDir = _INTERNAL.getCacheDirectory();
+		if(Files.notExists(cacheDir)){
+			Files.createDirectory(cacheDir);
+		}
 	}
 }
