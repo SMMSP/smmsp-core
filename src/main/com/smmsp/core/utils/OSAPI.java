@@ -32,7 +32,7 @@ import java.nio.file.Path;
  * @author sean
  *
  */
-public abstract class OSAPI {
+public final class OSAPI {
 
 	/**
 	 * The directory what we're going to store our files in
@@ -63,13 +63,13 @@ public abstract class OSAPI {
 			
 			public boolean isThisOS(){
 				return "Windows 8".equals(OS_NAME) 
-						&& OS_VER.startsWith("7");
+						&& OS_VER.charAt(0) == '7';
 			}
 		},
 		
 		WINDOWS_7{
 			public Path getCacheDirectory(){
-				String homeDirectory = System.getProperty("user.home");
+				final String homeDirectory = System.getProperty("user.home");
 				
 				return FileSystems.getDefault().getPath(
 						homeDirectory,
@@ -94,13 +94,13 @@ public abstract class OSAPI {
 			
 			public boolean isThisOS(){
 				return "Windows Vista".equals(OS_NAME) 
-						&& OS_VER.startsWith("6");
+						&& OS_VER.charAt(0) == '6';
 			}
 		},
 		
 		WINDOWS_XP{
 			public Path getCacheDirectory(){
-				String homeDir = System.getProperty("user.home");
+				final String homeDir = System.getProperty("user.home");
 				
 				return FileSystems.getDefault().getPath(
 						homeDir,
@@ -112,7 +112,7 @@ public abstract class OSAPI {
 			
 			public boolean isThisOS(){
 				return "Windows XP".equals(OS_NAME) 
-						&& OS_VER.startsWith("5");
+						&& OS_VER.charAt(0) == '5';
 			}
 		},
 		
@@ -124,7 +124,7 @@ public abstract class OSAPI {
 		
 		LINUX{
 			public Path getCacheDirectory(){
-				String homeDirectory = System.getProperty("user.home");
+				final String homeDirectory = System.getProperty("user.home");
 				return FileSystems.getDefault().getPath(
 						homeDirectory, 
 						CACHE_DIR_NAME
@@ -161,22 +161,29 @@ public abstract class OSAPI {
 	 * variable.
 	 */
 	static {
-		for(OSAPI_Internal internal : OSAPI_Internal.values()){
-			if(internal.isThisOS()){
-				_INTERNAL = internal;
+		for(OSAPI_Internal inern : OSAPI_Internal.values()){
+			if(inern.isThisOS()){
+				internal = inern;
 				break;
 			}
 		}
 	}
 	
-	private static OSAPI_Internal _INTERNAL;
+	private static OSAPI_Internal internal;
+	
+	/**
+	 * Empty constructor.
+	 */
+	private OSAPI(){
+		// do nothing.
+	}
 	
 	/**
 	 * Returns the cache directory for SMMSP operations.
 	 * @return
 	 */
 	public static Path getCacheDirectory(){
-		return _INTERNAL.getCacheDirectory();
+		return internal.getCacheDirectory();
 	}
 	
 	/**
@@ -184,7 +191,7 @@ public abstract class OSAPI {
 	 * @return
 	 */
 	public static String getOSName(){
-		return _INTERNAL.toString();
+		return internal.toString();
 	}
 	
 	/**
@@ -193,7 +200,7 @@ public abstract class OSAPI {
 	 * @throws IOException
 	 */
 	public static void ensureCacheDirExists() throws IOException{
-		Path cacheDir = _INTERNAL.getCacheDirectory();
+		final Path cacheDir = internal.getCacheDirectory();
 		if(Files.notExists(cacheDir)){
 			Files.createDirectory(cacheDir);
 		}

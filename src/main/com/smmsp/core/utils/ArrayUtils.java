@@ -25,7 +25,14 @@ package com.smmsp.core.utils;
  * @author sean
  *
  */
-public abstract class ArrayUtils {
+public final class ArrayUtils {
+	
+	/**
+	 * Empty constructor.
+	 */
+	private ArrayUtils(){
+		// do nothing.
+	}
 
 	public static int[] combine(final int[]... arrays){
 		int[] combined = new int[0];
