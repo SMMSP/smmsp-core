@@ -26,18 +26,18 @@ package com.smmsp.time;
  * 
  * @author Sean P Madden
  */
-public class GPSTime {
+public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 
 	/**
 	 * The full GPS week is measured since January 6th 1980 on
 	 * Midnight
 	 */
-	private int					_fullGPSWeek			= 1024;
+	private int _fullGPSWeek = 1024;
 
 	/**
 	 * How many milliseconds into the current GPS week are we?
 	 */
-	private long				_millisecOfCurrentWeek	= 0;
+	private long _millisecOfCurrentWeek = 0;
 
 	/**
 	 * Number of milliseconds in a single GPS week
@@ -46,7 +46,7 @@ public class GPSTime {
 	 * pdf
 	 * section 2.3.5
 	 */
-	public static final long	MILLIS_IN_WEEK			= 604800000;
+	public static final long MILLIS_IN_WEEK = 604800000;
 
 	public GPSTime() {
 
@@ -97,8 +97,7 @@ public class GPSTime {
 
 	public synchronized GPSTime add(GPSTime other) {
 		int week = _fullGPSWeek + other.getFullGPSWeek();
-		long millis = _millisecOfCurrentWeek
-				+ other.getMillisecOfCurrentWeek();
+		long millis = _millisecOfCurrentWeek + other.getMillisecOfCurrentWeek();
 
 		// compute rollover bits
 		if (millis >= MILLIS_IN_WEEK) {
@@ -106,7 +105,7 @@ public class GPSTime {
 			millis = adjustedRolloverMillis(millis);
 		} else if (millis < 0) {
 			week -= adjustedRolloverWeeks(millis) + 1;
-			millis = (int)MILLIS_IN_WEEK - adjustedRolloverMillis(millis);
+			millis = (int) MILLIS_IN_WEEK - adjustedRolloverMillis(millis);
 		}
 
 		return new GPSTime(week, millis);
@@ -122,8 +121,7 @@ public class GPSTime {
 	public GPSTime subtract(GPSTime other) {
 		GPSTime t = new GPSTime();
 		t.setFullGPSWeek(other.getFullGPSWeek() * -1);
-		t.setMillisecOfCurrentWeek(other.getMillisecOfCurrentWeek()
-				* -1);
+		t.setMillisecOfCurrentWeek(other.getMillisecOfCurrentWeek() * -1);
 		return add(t);
 	}
 
@@ -135,7 +133,7 @@ public class GPSTime {
 	 * @return new GPSTime of result
 	 */
 	public synchronized GPSTime addSec(int seconds) {
-		return addMillis(1000*seconds);
+		return addMillis(1000 * seconds);
 	}
 
 	/**
@@ -195,7 +193,7 @@ public class GPSTime {
 	public static int adjustedRolloverWeeks(long millis) {
 		millis = Math.abs(millis);
 		long fulls = millis - adjustedRolloverMillis(millis);
-		return (int)(fulls / MILLIS_IN_WEEK);
+		return (int) (fulls / MILLIS_IN_WEEK);
 	}
 
 	/**
@@ -209,7 +207,7 @@ public class GPSTime {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + _fullGPSWeek;
-		result = prime * result + (int)_millisecOfCurrentWeek;
+		result = prime * result + (int) _millisecOfCurrentWeek;
 		return result;
 	}
 
@@ -222,12 +220,22 @@ public class GPSTime {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) { return true; }
-		if (obj == null) { return false; }
-		if (getClass() != obj.getClass()) { return false; }
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 		GPSTime other = (GPSTime) obj;
-		if (_fullGPSWeek != other._fullGPSWeek) { return false; }
-		if (_millisecOfCurrentWeek != other._millisecOfCurrentWeek) { return false; }
+		if (_fullGPSWeek != other._fullGPSWeek) {
+			return false;
+		}
+		if (_millisecOfCurrentWeek != other._millisecOfCurrentWeek) {
+			return false;
+		}
 		return true;
 	}
 
@@ -239,9 +247,20 @@ public class GPSTime {
 	 */
 	@Override
 	public String toString() {
-		return "GPSTime [_fullGPSWeek=" + _fullGPSWeek
-				+ ", _millisecOfCurrentWeek="
-				+ _millisecOfCurrentWeek + "]";
+		return "GPSTime [fullGPSWeek=" + _fullGPSWeek
+				+ ", millisecOfCurrentWeek=" + _millisecOfCurrentWeek + "]";
+	}
+
+	@Override
+	public int compareTo(GPSTime o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public UnixTime toUnixTime() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -21,6 +21,8 @@
  */
 package com.smmsp.core.net;
 
+import java.nio.file.Path;
+
 /**
  * This interface represents an object that contains a cache, and
  * can update that cache.
@@ -29,5 +31,51 @@ package com.smmsp.core.net;
  */
 public interface Cachable {
 
-	public void checkCache();
+	/**
+	 * An exception to be thrown when there is an issue with the cache
+	 * @author sean
+	 *
+	 */
+	public static class CacheException extends RuntimeException{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3850829271771966035L;
+		
+		/**
+		 * Constructor
+		 * @param msg
+		 */
+		public CacheException(String msg){
+			super(msg);
+		}
+		
+		/**
+		 * Constructor
+		 * @param msg
+		 * @param err
+		 */
+		public CacheException(String msg, Throwable err){
+			super(msg, err);
+		}
+		
+	}
+	
+	/**
+	 * Instructs this cachable to update it's cache.
+	 */
+	public void updateCache() throws CacheException;
+	
+	/**
+	 * Does this cachable need to update it's cache?
+	 * @return True if the cache needs updating.
+	 */
+	public boolean cacheNeedsUpdate() throws CacheException;
+	
+	/**
+	 * Returns the path to this cachable's cache.
+	 * @return
+	 * @throws CacheException
+	 */
+	public Path getPathToCache() throws CacheException;
 }

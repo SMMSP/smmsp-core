@@ -22,13 +22,26 @@
 package com.smmsp.time;
 
 /**
+ * Represents an instance in time on the gregorian calendar.
  * @author sean
  *
  */
-public class GregorianDate {
+public class GregorianDate implements 
+				Comparable<GregorianDate>, TimeInstant{
 
+	/**
+	 * The years
+	 */
 	private int _years = 1900;
+	
+	/**
+	 * The months
+	 */
 	private int _months = 1;
+	
+	/**
+	 * The days
+	 */
 	private int _days = 1;
 	
 	/**
@@ -38,6 +51,12 @@ public class GregorianDate {
 		
 	}
 	
+	/**
+	 * Constructor.
+	 * @param years
+	 * @param months
+	 * @param days
+	 */
 	public GregorianDate(int years, int months, int days){
 		if(months > 12 || months < 1){
 			throw new IllegalArgumentException("Invalid month range");
@@ -100,10 +119,46 @@ public class GregorianDate {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "GregorianDate [year=" + _years + ", month=" + _months
 				+ ", day=" + _days + "]";
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(GregorianDate o) {
+		if(_years < o._years){
+			return -1;
+		}else if(_years > o._years){
+			return 1;
+		}
+		// years are equal at this point, check months.
+		if(_months < o._months){
+			return -1;
+		}else if(_months > o._months){
+			return 1;
+		}
+		// months are equal at this point, check days.
+		
+		if(_days < o._days){
+			return -1;
+		}else if(_days > o._days){
+			return 1;
+		}
+		// everything is equal.
+		return 0;
+	}
+
+	@Override
+	public UnixTime toUnixTime() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

@@ -22,10 +22,8 @@
 package com.smmsp.core.net;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.ProtocolException;
-import java.nio.channels.Channel;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
@@ -64,25 +62,38 @@ public class LeapHistoryProcessor implements Cachable{
 	 */
 	private static final int MAX_CACHE_TIMEOUT = 604800;  
 
+	/**
+	 * Internal storage bit for the leaps history
+	 */
 	private LinkedHashMap<GregorianDateRange, Integer> _leapsRange;
 	
 	/* (non-Javadoc)
-	 * @see com.smmsp.core.net.Cachable#checkCache()
+	 * @see com.smmsp.core.net.Cachable#getPathToCache()
 	 */
-	public void checkCache(){
+	@Override
+	public Path getPathToCache(){
+		Path fullCachedFile = Paths.get(
+				OSAPI.getCacheDirectory().toString(),
+				LEAPS_CACHE_FILE
+				);
+		return fullCachedFile;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.smmsp.core.net.Cachable#cacheNeedsUpdate()
+	 */
+	@Override
+	public boolean cacheNeedsUpdate() throws CacheException{
 		try {
 			OSAPI.ensureCacheDirExists();
 		} catch (IOException e) {
 			// This shouldn't happen, but if it does - log an error.
 			log.error("Could not create cache directory.", e);
-			return;
+			throw new CacheException("Could not create cache directory.", e);
 		}
 		
 		boolean needsDownload = false;
-		Path fullCachedFile = Paths.get(
-				OSAPI.getCacheDirectory().toString(),
-				LEAPS_CACHE_FILE
-				);
+		Path fullCachedFile = getPathToCache();
 		
 		if(Files.notExists(fullCachedFile)){
 			needsDownload = true;
@@ -99,15 +110,23 @@ public class LeapHistoryProcessor implements Cachable{
 				}
 			} catch (IOException e) {
 				log.error("Unable to get file modification time on leaps cache", e);
-				return;
+				throw new CacheException("Unable to get file modification time on leaps cache", e);
 			}
 		}
 		
+		return needsDownload;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.smmsp.core.net.Cachable#checkCache()
+	 */
+	public void updateCache(){
 		// if we don't need to update the cache, bail out.
-		if(!needsDownload){
+		if(!cacheNeedsUpdate()){
 			return;
 		}
 		
+		Path fullCachedFile = getPathToCache();
 		
 		try {
 			FTPConnection conn = new FTPConnection(LEAPS_URL);
@@ -134,12 +153,17 @@ public class LeapHistoryProcessor implements Cachable{
 		
 	}
 	
+	/**
+	 * Actually go ahead and parse the file, pulling out the history
+	 * and populating the internal data sites
+	 */
 	private void populateHistory(){
-		checkCache();
-		Path fullCachedFile = Paths.get(
-				OSAPI.getCacheDirectory().toString(),
-				LEAPS_CACHE_FILE
-				);
+		if(cacheNeedsUpdate()){
+			updateCache();
+		}
+		
+		Path fullCachedFile = getPathToCache();
+		
 		try {
 			FileChannel cachedFile = FileChannel.open(
 					fullCachedFile,
@@ -220,4 +244,6 @@ public class LeapHistoryProcessor implements Cachable{
 		
 		return 0;
 	}
+
+
 }

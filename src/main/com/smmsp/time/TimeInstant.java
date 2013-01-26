@@ -22,15 +22,14 @@
 package com.smmsp.time;
 
 /**
- * This interface represents a series of conversions to all other 
- * formats for time instants.
+ * This interface represents a global starting point for all points
+ * in time.
  * 
  * @author sean
  *
  */
 public interface TimeInstant {
 
-	public GPSTime toGPSTime();
-	
 	public UnixTime toUnixTime();
+	
 }

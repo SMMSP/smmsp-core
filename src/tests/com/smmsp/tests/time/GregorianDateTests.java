@@ -113,6 +113,9 @@ public class GregorianDateTests {
 		assertNotNull(str);
 	}
 	
-	
+	@Test
+	public final void testCompareDates(){
+		
+	}
 
 }

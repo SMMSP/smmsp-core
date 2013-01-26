@@ -113,11 +113,6 @@ public class UnixTime implements TimeInstant{
 	}
 
 	@Override
-	public GPSTime toGPSTime() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public UnixTime toUnixTime() {
 		return this;
 	}

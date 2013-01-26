@@ -29,15 +29,10 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.CharBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.print.DocFlavor.BYTE_ARRAY;
 
 import org.apache.log4j.Logger;
 
@@ -159,7 +154,7 @@ public class FTPConnection extends InternetConnection {
 	}
 
 	protected void sendCommand(String cmd, SocketChannel out) throws IOException{
-		LOG.debug("FTP sent: " + cmd);
+		LOG.debug("FTP sent: " + cmd.trim());
 		ByteBuffer buf = ByteBuffer.allocate(cmd.length());
 		buf.put(cmd.getBytes());
 		buf.rewind();
@@ -168,10 +163,10 @@ public class FTPConnection extends InternetConnection {
 	
 	protected String readAndVerifyStatus(String status, SocketChannel in) throws IOException{
 		ByteBuffer buf = ByteBuffer.allocate(255);
-		int read = in.read(buf);
+		in.read(buf);
 		buf.rewind();
 		String response = new String(buf.array(), "UTF-8");
-		LOG.debug("FTP received: " + response);
+		LOG.debug("FTP received: " + response.trim());
 		if(!response.startsWith(status)){
 			String code = response.substring(0, 3);
 			LOG.error("FTP unexpected status code: " + code);

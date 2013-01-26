@@ -1,5 +1,5 @@
 /*
- * LeapHistoryProcessorTests.java
+ * package-info.java
  * 
  * Copyright (C) 2013 Sean P Madden
  * 
@@ -19,25 +19,9 @@
  * If you would like to license this code under the GNU LGPL, please
  * see http://www.seanmadden.net/licensing for details.
  */
-package com.smmsp.tests.net;
-
-import com.smmsp.core.net.LeapHistoryProcessor;
-
 /**
  * @author sean
  *
  */
-public class LeapHistoryProcessorTests {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-		LeapHistoryProcessor proc = new LeapHistoryProcessor();
-		proc.updateCache();
-		
-		proc.getLeapsForDate(null);
-	}
-
-}
+package com.smmsp.time;

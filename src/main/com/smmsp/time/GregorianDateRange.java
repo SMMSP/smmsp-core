@@ -21,8 +21,9 @@
  */
 package com.smmsp.time;
 
-
 /**
+ * This class represents a span of two gregorian dates.  For the 
+ * purposes of this class, the range is [start, end). 
  * @author sean
  *
  */
