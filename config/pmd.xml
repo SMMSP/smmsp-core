@@ -14,7 +14,7 @@
    <rule ref="rulesets/design.xml/SimplifyBooleanExpressions"/>
    <rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault"/>
    <rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts"/>
-   <rule ref="rulesets/design.xml/AvoidReassigningParameters"/>
+   <!--<rule ref="rulesets/design.xml/AvoidReassigningParameters"/>-->
    <rule ref="rulesets/design.xml/SwitchDensity"/>
    <rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod"/>
    <rule ref="rulesets/design.xml/AccessorClassGeneration"/>
@@ -197,7 +197,7 @@
    <rule ref="rulesets/controversial.xml/AvoidAccessibilityAlteration"/>
    <rule ref="rulesets/controversial.xml/DoNotCallGarbageCollectionExplicitly"/>
    <!--<rule ref="rulesets/naming.xml/ShortVariable"/>-->
-   <rule ref="rulesets/naming.xml/LongVariable"/>
+   <!--<rule ref="rulesets/naming.xml/LongVariable"/>-->
    <rule ref="rulesets/naming.xml/ShortMethodName"/>
    <rule ref="rulesets/naming.xml/VariableNamingConventions"/>
    <rule ref="rulesets/naming.xml/MethodNamingConventions"/>

@@ -25,22 +25,22 @@ package com.smmsp.time;
  * @author sean
  *
  */
-public class UnixTime implements TimeInstant{
-	
+public class UnixTime implements TimeInstant {
+
 	public static final int EPOCH_YEAR = 1970;
 	public static final int EPOCH_MONTH = 1;
 	public static final int EPOCH_DAY = 1;
 
-	private GregorianDate _date = new GregorianDate();
-	private int _hours = 0;
-	private int _minutes = 0;
-	private int _seconds = 0;
-	
+	private GregorianDate date = new GregorianDate();
+	private int hours = 0;
+	private int minutes = 0;
+	private int seconds = 0;
+
 	/**
 	 * Empty constructor - defaults to 1/1/1970
 	 */
 	public UnixTime() {
-		_date = new GregorianDate(EPOCH_YEAR, EPOCH_MONTH, EPOCH_DAY);
+		this.date = new GregorianDate(EPOCH_YEAR, EPOCH_MONTH, EPOCH_DAY);
 	}
 
 	/**
@@ -48,8 +48,8 @@ public class UnixTime implements TimeInstant{
 	 * @param _months
 	 * @param _days
 	 */
-	public UnixTime(int _years, int _months, int _days) {
-		_date = new GregorianDate(_years, _months, _days);
+	public UnixTime(final int _years, final int _months, final int _days) {
+		this.date = new GregorianDate(_years, _months, _days);
 	}
 
 	/**
@@ -60,55 +60,56 @@ public class UnixTime implements TimeInstant{
 	 * @param _minutes
 	 * @param _seconds
 	 */
-	public UnixTime(int _years, int _months, int _days, int _hours,
-			int _minutes, int _seconds) {
+	public UnixTime(final int _years, final int _months, final int _days,
+			final int _hours, final int _minutes, final int _seconds) {
 		this(_years, _months, _days);
-		this._hours = _hours;
-		this._minutes = _minutes;
-		this._seconds = _seconds;
+		this.hours = _hours;
+		this.minutes = _minutes;
+		this.seconds = _seconds;
 	}
 
-	
 	/**
 	 * Returns the unix timestamp represented by this object
 	 * @return
 	 * @throws TimeException
 	 */
-	public long toTimestamp() throws TimeException{
-		int numYearsSinceEpoch = _date.get_years() - EPOCH_YEAR;
-		
-		if(numYearsSinceEpoch < 0){
+	public long toTimestamp() throws TimeException {
+		final int numYearsSinceEpoch = this.date.getYears() - EPOCH_YEAR;
+
+		if (numYearsSinceEpoch < 0) {
 			throw new TimeException("Years must be >= " + EPOCH_YEAR);
 		}
-		
+
 		int daysSinceEpoch = 0;
-		for(int i = 0; i < numYearsSinceEpoch; ++i){
-			if(GregorianDate.isLeapYear(EPOCH_YEAR + i)){
+		for (int i = 0; i < numYearsSinceEpoch; ++i) {
+			if (GregorianDate.isLeapYear(EPOCH_YEAR + i)) {
 				daysSinceEpoch += TimeConstants.DAYS_IN_LEAP_YEAR;
-			}else{
+			} else {
 				daysSinceEpoch += TimeConstants.DAYS_IN_YEAR;
 			}
 		}
-		
-		daysSinceEpoch += _date.get_days() - 1;
+
+		daysSinceEpoch += this.date.getDays() - 1;
 		int[] monthDays;
-		if(_date.isLeapYear()){
+		if (this.date.isLeapYear()) {
 			monthDays = TimeConstants.GREGORIAN_DAYS_IN_LEAP_MONTH;
-		}else{
+		} else {
 			monthDays = TimeConstants.GREGORIAN_DAYS_IN_MONTH;
 		}
-		
-		for(int i = 0; i < _date.get_months() - 1; ++i){
+
+		for (int i = 0; i < (this.date.getMonths() - 1); ++i) {
 			daysSinceEpoch += monthDays[i];
 		}
-		
-		int hoursInSeconds = _hours * TimeConstants.SECONDS_IN_HOUR;
-		int minutesInSeconds = _minutes * TimeConstants.SECONDS_IN_MINUTE;
-		long daysInSeconds = daysSinceEpoch * TimeConstants.SECONDS_IN_DAY;
-		
+
+		final int hoursInSeconds = this.hours * TimeConstants.SECONDS_IN_HOUR;
+		final int minutesInSeconds = this.minutes
+				* TimeConstants.SECONDS_IN_MINUTE;
+		final long daysInSeconds = daysSinceEpoch
+				* TimeConstants.SECONDS_IN_DAY;
+
 		long seconds = daysInSeconds + hoursInSeconds + minutesInSeconds;
-		seconds += _seconds;
-		
+		seconds += this.seconds;
+
 		return seconds;
 	}
 

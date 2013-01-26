@@ -31,5 +31,5 @@ package com.smmsp.time;
 public interface TimeInstant {
 
 	public UnixTime toUnixTime();
-	
+
 }

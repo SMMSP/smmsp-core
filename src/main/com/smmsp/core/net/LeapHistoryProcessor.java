@@ -204,7 +204,7 @@ public class LeapHistoryProcessor implements Cachable{
 				
 				GregorianDate date = new GregorianDate(
 						year, 
-						TimeConstants.MonthStringToInt(month), 
+						TimeConstants.monthStringToInt(month), 
 						day);
 				GregorianDateRange range = 
 						new GregorianDateRange(previousDate, date);

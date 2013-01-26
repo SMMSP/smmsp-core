@@ -26,97 +26,95 @@ package com.smmsp.time;
  * @author sean
  *
  */
-public class GregorianDate implements 
-				Comparable<GregorianDate>, TimeInstant{
+public class GregorianDate implements Comparable<GregorianDate>, TimeInstant {
 
 	/**
 	 * The years
 	 */
-	private int _years = 1900;
-	
+	private int years = 1900;
+
 	/**
 	 * The months
 	 */
-	private int _months = 1;
-	
+	private int months = 1;
+
 	/**
 	 * The days
 	 */
-	private int _days = 1;
-	
+	private int days = 1;
+
 	/**
 	 * Constructor - defaults to 1/1/1900
 	 */
-	public GregorianDate(){
-		
+	public GregorianDate() {
+		// do nothing.
 	}
-	
+
 	/**
 	 * Constructor.
 	 * @param years
 	 * @param months
 	 * @param days
 	 */
-	public GregorianDate(int years, int months, int days){
-		if(months > 12 || months < 1){
+	public GregorianDate(final int years, final int months, final int days) {
+		if ((months > 12) || (months < 1)) {
 			throw new IllegalArgumentException("Invalid month range");
 		}
-		if(days > TimeConstants.GetDaysInMonth(months, isLeapYear(years))
-				|| days < 1){
-			throw new IllegalArgumentException(
-					"Invalid day in month " + months + 
-					" (" + days + ")");
+		if ((days > TimeConstants.getDaysInMonth(months, isLeapYear(years)))
+				|| (days < 1)) {
+			throw new IllegalArgumentException("Invalid day in month " + months
+					+ " (" + days + ")");
 		}
-		
-		_years = years;
-		_months = months;
-		_days = days;
+
+		this.years = years;
+		this.months = months;
+		this.days = days;
 	}
-	
+
 	/**
 	 * @return the _years
 	 */
-	public int get_years() {
-		return _years;
+	public int getYears() {
+		return this.years;
 	}
 
 	/**
 	 * @return the _months
 	 */
-	public int get_months() {
-		return _months;
+	public int getMonths() {
+		return this.months;
 	}
 
 	/**
 	 * @return the _days
 	 */
-	public int get_days() {
-		return _days;
+	public int getDays() {
+		return this.days;
 	}
 
 	/**
 	 * Returns true if the year within this UnixTime is a leap year
 	 * @return
 	 */
-	public boolean isLeapYear(){
-		return isLeapYear(_years);
+	public boolean isLeapYear() {
+		return isLeapYear(this.years);
 	}
-	
+
 	/**
 	 * Returns true if the year specified by 'year' is a leap year.
 	 * @param year
 	 * @return
 	 */
-	public static boolean isLeapYear(int year){
-		if(year % 400 == 0){
+	public static boolean isLeapYear(final int year) {
+		if ((year % 400) == 0) {
 			return true;
-		}else if(year % 100 == 0){
+		} else if ((year % 100) == 0) {
 			return false;
-		}else if(year % 4 == 0){
+		} else if ((year % 4) == 0) {
 			return true;
 		}
 		return false;
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -124,31 +122,31 @@ public class GregorianDate implements
 	 */
 	@Override
 	public String toString() {
-		return "GregorianDate [year=" + _years + ", month=" + _months
-				+ ", day=" + _days + "]";
+		return "GregorianDate [year=" + this.years + ", month=" + this.months
+				+ ", day=" + this.days + "]";
 	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(GregorianDate o) {
-		if(_years < o._years){
+	public int compareTo(final GregorianDate o) {
+		if (this.years < o.years) {
 			return -1;
-		}else if(_years > o._years){
+		} else if (this.years > o.years) {
 			return 1;
 		}
 		// years are equal at this point, check months.
-		if(_months < o._months){
+		if (this.months < o.months) {
 			return -1;
-		}else if(_months > o._months){
+		} else if (this.months > o.months) {
 			return 1;
 		}
 		// months are equal at this point, check days.
-		
-		if(_days < o._days){
+
+		if (this.days < o.days) {
 			return -1;
-		}else if(_days > o._days){
+		} else if (this.days > o.days) {
 			return 1;
 		}
 		// everything is equal.
@@ -160,6 +158,5 @@ public class GregorianDate implements
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
 }

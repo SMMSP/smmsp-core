@@ -21,6 +21,7 @@
 *
 */
 package com.smmsp.time;
+
 /**
  * Mean Julian Date Skewer.  Used to support UTC-TAI-GPS conversions
  * before Jan 1 1972.  Before this date the UTC-TAI offset was based
@@ -34,10 +35,10 @@ package com.smmsp.time;
  */
 public class MJDSkewer {
 
-	private double _A = 0;
-	private double _B = 0;
-	private double _C = 0;
-	
+	private final double A;
+	private final double B;
+	private final double C;
+
 	/**
 	 * Creates an MJD Skewer for dates pre-1972
 	 *
@@ -45,20 +46,20 @@ public class MJDSkewer {
 	 * @param b
 	 * @param c
 	 */
-	public MJDSkewer(double a, double b, double c){
-		_A = a;
-		_B = b;
-		_C = c;
+	public MJDSkewer(final double a, final double b, final double c) {
+		this.A = a;
+		this.B = b;
+		this.C = c;
 	}
-	
+
 	/**
 	* Skews the date for the UTC-TAI Conversion
 	* 
 	* @param MJD Date to get the skew
 	* @return The UTC-TAI offset at this pre-1972 date.
 	*/
-	public double skew(double MJD){
-		
-		return _A + (MJD - _B) * _C;
+	public double skew(final double MJD) {
+
+		return this.A + ((MJD - this.B) * this.C);
 	}
 }

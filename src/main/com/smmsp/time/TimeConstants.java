@@ -30,30 +30,31 @@ import java.util.List;
  * @author sean
  *
  */
-public abstract class TimeConstants {
+public final class TimeConstants {
 
 	public static final int SECONDS_IN_DAY = 86400;
-	
+
 	public static final int SECONDS_IN_HOUR = 3600;
-	
+
 	public static final int SECONDS_IN_MINUTE = 60;
-	
+
 	public static final int DAYS_IN_YEAR = 365;
-	
+
 	public static final int DAYS_IN_LEAP_YEAR = 366;
-	
-	public static final int[] GREGORIAN_DAYS_IN_MONTH = {
-		31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
-	};
-	
-	public static final int[] GREGORIAN_DAYS_IN_LEAP_MONTH = {
-		31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31	
-	};
-	
-	public static final String[] GREGORIAN_MONTH_STRINGS = {
-		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-	};
+
+	public static final int[] GREGORIAN_DAYS_IN_MONTH = { 31, 28, 31, 30, 31,
+			30, 31, 31, 30, 31, 30, 31 };
+
+	public static final int[] GREGORIAN_DAYS_IN_LEAP_MONTH = { 31, 29, 31, 30,
+			31, 30, 31, 31, 30, 31, 30, 31 };
+
+	public static final String[] GREGORIAN_MONTH_STRINGS = { "Jan", "Feb",
+			"Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
+			"Dec" };
+
+	private TimeConstants(){
+		// do nothing.
+	}
 	
 	/**
 	 * Returns the month number (1 => 12) from the string specified 
@@ -61,24 +62,25 @@ public abstract class TimeConstants {
 	 * @param month
 	 * @return
 	 */
-	public static final int MonthStringToInt(String month){
-		List<String> months = Arrays.asList(GREGORIAN_MONTH_STRINGS);
+	public static int monthStringToInt(final String month) {
+		final List<String> months = Arrays.asList(GREGORIAN_MONTH_STRINGS);
 		return months.indexOf(month) + 1;
 	}
-	
+
 	/**
 	 * Returns the number of days in the month specified by month
 	 * @param month The month number (1 => 12);
 	 * @param isLeapYear Is the month within a leap year?
 	 * @return
 	 */
-	public static final int GetDaysInMonth(int month, boolean isLeapYear){
-		int monthIdx = month - 1;
-		if(monthIdx < 0 || monthIdx > 12){
+	public static int getDaysInMonth(final int month,
+			final boolean isLeapYear) {
+		final int monthIdx = month - 1;
+		if ((monthIdx < 0) || (monthIdx > 12)) {
 			throw new IllegalArgumentException("Month number out of range");
 		}
-		int[] daysArray = (isLeapYear)?
-				GREGORIAN_DAYS_IN_LEAP_MONTH : GREGORIAN_DAYS_IN_MONTH;
+		final int[] daysArray = (isLeapYear) ? GREGORIAN_DAYS_IN_LEAP_MONTH
+				: GREGORIAN_DAYS_IN_MONTH;
 		return daysArray[monthIdx];
 	}
 }

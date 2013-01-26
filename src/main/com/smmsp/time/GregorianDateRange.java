@@ -29,34 +29,36 @@ package com.smmsp.time;
  */
 public class GregorianDateRange {
 
-	private GregorianDate _start;
-	private GregorianDate _end;
-	
-	public GregorianDateRange(int startYear, int startMonth, int startDay,
-			int endYear, int endMonth, int endDay){
-		_start = new GregorianDate(startYear, startMonth, startDay);
-		_end = new GregorianDate(endYear, endMonth, endDay);
+	private final GregorianDate _start;
+	private final GregorianDate _end;
+
+	public GregorianDateRange(final int startYear, final int startMonth,
+			final int startDay, final int endYear, final int endMonth,
+			final int endDay) {
+		this._start = new GregorianDate(startYear, startMonth, startDay);
+		this._end = new GregorianDate(endYear, endMonth, endDay);
 	}
-	
-	public GregorianDateRange(GregorianDate start, GregorianDate end){
-		_start = start;
-		_end = end;
+
+	public GregorianDateRange(final GregorianDate start, final GregorianDate end) {
+		this._start = start;
+		this._end = end;
 	}
-	
-	public boolean isWithinRange(GregorianDate date){
+
+	public boolean isWithinRange(final GregorianDate date) {
 		throw new UnsupportedOperationException();
 	}
-	
-	public boolean isBefore(GregorianDate date){
+
+	public boolean isBefore(final GregorianDate date) {
 		throw new UnsupportedOperationException();
 	}
-	
-	public boolean isAfter(GregorianDate date){
+
+	public boolean isAfter(final GregorianDate date) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String toString() {
-		return "GregorianDateRange [start=" + _start + ", end=" + _end + "]";
+		return "GregorianDateRange [start=" + this._start + ", end="
+				+ this._end + "]";
 	}
 }

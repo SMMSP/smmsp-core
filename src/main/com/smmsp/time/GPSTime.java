@@ -32,12 +32,12 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 * The full GPS week is measured since January 6th 1980 on
 	 * Midnight
 	 */
-	private int _fullGPSWeek = 1024;
+	private int fullGPSWeek = 1024;
 
 	/**
 	 * How many milliseconds into the current GPS week are we?
 	 */
-	private long _millisecOfCurrentWeek = 0;
+	private long millisecOfCurrentWeek = 0;
 
 	/**
 	 * Number of milliseconds in a single GPS week
@@ -48,13 +48,21 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 */
 	public static final long MILLIS_IN_WEEK = 604800000;
 
+	/**
+	 * Constructor
+	 */
 	public GPSTime() {
-
+		// do nothing
 	}
 
-	public GPSTime(int fullGPSWeek, long millisIntoWeek) {
-		_fullGPSWeek = fullGPSWeek;
-		_millisecOfCurrentWeek = millisIntoWeek;
+	/**
+	 * Constructor
+	 * @param fullGPSWeek
+	 * @param millisIntoWeek
+	 */
+	public GPSTime(final int fullGPSWeek, final long millisIntoWeek) {
+		this.fullGPSWeek = fullGPSWeek;
+		this.millisecOfCurrentWeek = millisIntoWeek;
 	}
 
 	/**
@@ -62,8 +70,8 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 * 
 	 * @return _fullGPSWeek the _fullGPSWeek
 	 */
-	public synchronized int getFullGPSWeek() {
-		return _fullGPSWeek;
+	public int getFullGPSWeek() {
+		return this.fullGPSWeek;
 	}
 
 	/**
@@ -72,8 +80,8 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 * @param _fullGPSWeek
 	 *            the _fullGPSWeek to set
 	 */
-	public synchronized void setFullGPSWeek(int _fullGPSWeek) {
-		this._fullGPSWeek = _fullGPSWeek;
+	public void setFullGPSWeek(final int _fullGPSWeek) {
+		this.fullGPSWeek = _fullGPSWeek;
 	}
 
 	/**
@@ -81,8 +89,8 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 * 
 	 * @return _millisecOfCurrentWeek the _millisecOfCurrentWeek
 	 */
-	public synchronized long getMillisecOfCurrentWeek() {
-		return _millisecOfCurrentWeek;
+	public long getMillisecOfCurrentWeek() {
+		return this.millisecOfCurrentWeek;
 	}
 
 	/**
@@ -91,13 +99,14 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 * @param l
 	 *            the _millisecOfCurrentWeek to set
 	 */
-	public synchronized void setMillisecOfCurrentWeek(long l) {
-		this._millisecOfCurrentWeek = l;
+	public void setMillisecOfCurrentWeek(final long l) {
+		this.millisecOfCurrentWeek = l;
 	}
 
-	public synchronized GPSTime add(GPSTime other) {
-		int week = _fullGPSWeek + other.getFullGPSWeek();
-		long millis = _millisecOfCurrentWeek + other.getMillisecOfCurrentWeek();
+	public GPSTime add(final GPSTime other) {
+		int week = this.fullGPSWeek + other.getFullGPSWeek();
+		long millis = this.millisecOfCurrentWeek
+				+ other.getMillisecOfCurrentWeek();
 
 		// compute rollover bits
 		if (millis >= MILLIS_IN_WEEK) {
@@ -118,11 +127,11 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 *            The time to subtract
 	 * @return a new GPSTime of the result
 	 */
-	public GPSTime subtract(GPSTime other) {
-		GPSTime t = new GPSTime();
+	public GPSTime subtract(final GPSTime other) {
+		final GPSTime t = new GPSTime();
 		t.setFullGPSWeek(other.getFullGPSWeek() * -1);
 		t.setMillisecOfCurrentWeek(other.getMillisecOfCurrentWeek() * -1);
-		return add(t);
+		return this.add(t);
 	}
 
 	/**
@@ -132,8 +141,8 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 *            The number of seconds to add (go forward in time)
 	 * @return new GPSTime of result
 	 */
-	public synchronized GPSTime addSec(int seconds) {
-		return addMillis(1000 * seconds);
+	public GPSTime addSec(final int seconds) {
+		return this.addMillis(1000 * seconds);
 	}
 
 	/**
@@ -143,8 +152,8 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 *            number of seconds to subtract (go back in time)
 	 * @return new GPSTime of result.
 	 */
-	public GPSTime subtractSec(int seconds) {
-		return addSec(-1 * seconds);
+	public GPSTime subtractSec(final int seconds) {
+		return this.addSec(-1 * seconds);
 	}
 
 	/**
@@ -154,8 +163,8 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 *            Milliseconds to add
 	 * @return new GPSTime of result
 	 */
-	public synchronized GPSTime addMillis(long millis) {
-		return add(new GPSTime(0, millis));
+	public GPSTime addMillis(final long millis) {
+		return this.add(new GPSTime(0, millis));
 	}
 
 	/**
@@ -165,8 +174,8 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 *            number of milliseconds to subtract (go back in time)
 	 * @return new GPSTime of result
 	 */
-	public GPSTime subtractMillis(long millis) {
-		return addMillis(-1 * millis);
+	public GPSTime subtractMillis(final long millis) {
+		return this.addMillis(-1 * millis);
 	}
 
 	/**
@@ -178,7 +187,7 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 *            Number of Millis to truncate
 	 * @return Truncated Millis
 	 */
-	public static long adjustedRolloverMillis(long millis) {
+	public static long adjustedRolloverMillis(final long millis) {
 		return Math.abs(millis) % MILLIS_IN_WEEK;
 	}
 
@@ -192,7 +201,7 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 */
 	public static int adjustedRolloverWeeks(long millis) {
 		millis = Math.abs(millis);
-		long fulls = millis - adjustedRolloverMillis(millis);
+		final long fulls = millis - adjustedRolloverMillis(millis);
 		return (int) (fulls / MILLIS_IN_WEEK);
 	}
 
@@ -206,8 +215,8 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + _fullGPSWeek;
-		result = prime * result + (int) _millisecOfCurrentWeek;
+		result = (prime * result) + this.fullGPSWeek;
+		result = (prime * result) + (int) this.millisecOfCurrentWeek;
 		return result;
 	}
 
@@ -219,21 +228,21 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 * @return
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		GPSTime other = (GPSTime) obj;
-		if (_fullGPSWeek != other._fullGPSWeek) {
+		final GPSTime other = (GPSTime) obj;
+		if (this.fullGPSWeek != other.fullGPSWeek) {
 			return false;
 		}
-		if (_millisecOfCurrentWeek != other._millisecOfCurrentWeek) {
+		if (this.millisecOfCurrentWeek != other.millisecOfCurrentWeek) {
 			return false;
 		}
 		return true;
@@ -247,12 +256,12 @@ public class GPSTime implements Comparable<GPSTime>, TimeInstant {
 	 */
 	@Override
 	public String toString() {
-		return "GPSTime [fullGPSWeek=" + _fullGPSWeek
-				+ ", millisecOfCurrentWeek=" + _millisecOfCurrentWeek + "]";
+		return "GPSTime [fullGPSWeek=" + this.fullGPSWeek
+				+ ", millisecOfCurrentWeek=" + this.millisecOfCurrentWeek + "]";
 	}
 
 	@Override
-	public int compareTo(GPSTime o) {
+	public int compareTo(final GPSTime o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
