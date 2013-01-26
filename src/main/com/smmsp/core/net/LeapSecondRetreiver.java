@@ -27,14 +27,25 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 /**
  * Connects to HPIERS and downloads the latest bulletin-C, which contains the
  * current UTC-TAI offset (the number of leapseconds added)
  * 
  * @author Sean P Madden
  */
-public abstract class LeapSecondRetreiver {
+public final class LeapSecondRetreiver {
+	
+	private static final Logger LOG = Logger.getLogger(LeapSecondRetreiver.class);
 
+	/**
+	 * Empty constructor
+	 */
+	private LeapSecondRetreiver(){
+		// do nothing.
+	}
+	
 	/**
 	 * This exception wraps any subsequence exception below.
 	 * 
@@ -46,11 +57,11 @@ public abstract class LeapSecondRetreiver {
 		 */
 		private static final long serialVersionUID = 3587453559383920202L;
 
-		public LeapSecondException(Throwable cause) {
+		public LeapSecondException(final Throwable cause) {
 			super(cause);
 		}
 
-		public LeapSecondException(String cause) {
+		public LeapSecondException(final String cause) {
 			super(cause);
 		}
 	}
@@ -60,7 +71,7 @@ public abstract class LeapSecondRetreiver {
 	 */
 	private final static String BULLETIN_C_URL = "http://hpiers.obspm.fr/iers/bul/bulc/bulletinc.dat";
 
-	private static int _downloadedSeconds = Integer.MIN_VALUE;
+	private static int downloadedSeconds = Integer.MIN_VALUE;
 
 	/**
 	 * Returns the current number of leap seconds from the HPIERS 
@@ -68,15 +79,15 @@ public abstract class LeapSecondRetreiver {
 	 * @return
 	 */
 	public static int getLeapSeconds() {
-		if (_downloadedSeconds > 0) {
-			return _downloadedSeconds;
+		if (downloadedSeconds > 0) {
+			return downloadedSeconds;
 		}
 
 		try {
-			URL url = new URL(BULLETIN_C_URL);
+			final URL url = new URL(BULLETIN_C_URL);
 
-			HTTPConnection conn = new HTTPConnection(url);
-			BufferedReader read = new BufferedReader(new InputStreamReader(
+			final HTTPConnection conn = new HTTPConnection(url);
+			final BufferedReader read = new BufferedReader(new InputStreamReader(
 					conn.getDataStream()));
 
 			// pull out the data from the HTTP request.
@@ -84,21 +95,21 @@ public abstract class LeapSecondRetreiver {
 			while ((line = read.readLine()) != null) {
 				if (line.contains("until further notice")) {
 					// this line has the UTC-TAI Offset (leapseconds)
-					Pattern p = Pattern.compile(".+UTC-TAI = (.+)s.*");
-					Matcher m = p.matcher(line);
+					final Pattern p = Pattern.compile(".+UTC-TAI = (.+)s.*");
+					final Matcher m = p.matcher(line);
 					if (!m.matches()) {
 						throw new LeapSecondException(
 								"Parse Error in retreival");
 					}
 					line = m.group(1); // use the first matched group
 					line = line.replace(" ", "");// remove all spaces.
-					_downloadedSeconds = Integer.parseInt(line);
-					return _downloadedSeconds;
+					downloadedSeconds = Integer.parseInt(line);
+					return downloadedSeconds;
 				}
 			}
-			return _downloadedSeconds;
+			return downloadedSeconds;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 			throw new LeapSecondException(e);
 		}
 	}

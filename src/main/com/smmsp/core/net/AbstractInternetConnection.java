@@ -31,7 +31,7 @@ import java.nio.file.StandardCopyOption;
  * @author sean
  * 
  */
-public abstract class InternetConnection {
+public abstract class AbstractInternetConnection {
 
 	/**
 	 * Subclasses override this method to open the connection and get the input
@@ -51,7 +51,7 @@ public abstract class InternetConnection {
 	 * @return True if file was written properly
 	 * @throws IOException 
 	 */
-	public boolean saveToFile(File f) throws IOException {
+	public boolean saveToFile(final File f) throws IOException {
 		return Files.copy(getDataStream(), 
 				f.toPath(), 
 				StandardCopyOption.REPLACE_EXISTING) > 0;
@@ -64,7 +64,7 @@ public abstract class InternetConnection {
 	 * @return True if the file was written properly
 	 * @throws IOException
 	 */
-	public boolean saveToFile(String f) throws IOException {
+	public boolean saveToFile(final String f) throws IOException {
 		return saveToFile(new File(f));
 	}
 }

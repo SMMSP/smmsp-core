@@ -45,7 +45,7 @@ import com.smmsp.core.utils.ArrayUtils;
  * @author sean
  * 
  */
-public class FTPConnection extends InternetConnection {
+public class FTPConnection extends AbstractInternetConnection {
 
 	private static Logger LOG = Logger.getLogger(FTPConnection.class);
 

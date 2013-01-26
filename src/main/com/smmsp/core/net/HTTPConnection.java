@@ -28,23 +28,27 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
+
 /**
  * This class wraps the URL connection to provide an easy wrapper to
  * simply make HTTP GET Requests and return the data.
  *
  * @author Sean P Madden
  */
-public class HTTPConnection extends InternetConnection {
+public class HTTPConnection extends AbstractInternetConnection {
+	
+	private static final Logger LOG = Logger.getLogger(HTTPConnection.class);
 
-	private URL _url = null;
+	private final URL url;
 	
 	/**
 	 * Creates a HTTP Connection
 	 *
 	 * @param u
 	 */
-	public HTTPConnection(URL u){
-		this._url = u;
+	public HTTPConnection(final URL u){
+		this.url = u;
 	}
 	
 	/**
@@ -52,20 +56,20 @@ public class HTTPConnection extends InternetConnection {
 	 * @param url
 	 * @throws MalformedURLException
 	 */
-	public HTTPConnection(String url) throws MalformedURLException{
-		_url = new URL(url);
+	public HTTPConnection(final String u) throws MalformedURLException{
+		url = new URL(u);
 	}
 	
 	/* (non-Javadoc)
 	 * @see com.smmsp.core.net.InternetConnection#getDataStream()
 	 */
 	public InputStream getDataStream(){
-		if(_url == null){
+		if(url == null){
 			return null;
 		}
 		
 		try {
-			HttpURLConnection conn = (HttpURLConnection)_url.openConnection();
+			final HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setDoOutput(true);
 			conn.setReadTimeout(10000); // 10s in millis
@@ -74,7 +78,7 @@ public class HTTPConnection extends InternetConnection {
 			
 			return conn.getInputStream();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return null;
 	}

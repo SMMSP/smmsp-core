@@ -180,8 +180,8 @@
    <rule ref="rulesets/controversial.xml/UnnecessaryConstructor"/>
    <rule ref="rulesets/controversial.xml/NullAssignment"/>
    <!--<rule ref="rulesets/controversial.xml/OnlyOneReturn"/>-->
-   <rule ref="rulesets/controversial.xml/UnusedModifier"/>
-   <rule ref="rulesets/controversial.xml/AssignmentInOperand"/>
+   <!--<rule ref="rulesets/controversial.xml/UnusedModifier"/>-->
+   <!--<rule ref="rulesets/controversial.xml/AssignmentInOperand"/>-->
    <rule ref="rulesets/controversial.xml/AtLeastOneConstructor"/>
    <rule ref="rulesets/controversial.xml/DontImportSun"/>
    <rule ref="rulesets/controversial.xml/SuspiciousOctalEscape"/>
@@ -233,7 +233,7 @@
    <rule ref="rulesets/finalizers.xml/AvoidCallingFinalize"/>
    <rule ref="rulesets/logging-jakarta-commons.xml/UseCorrectExceptionLogging"/>
    <rule ref="rulesets/logging-jakarta-commons.xml/ProperLogger"/>
-   <rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize"/>
+   <!--<rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize"/>-->
    <rule ref="rulesets/javabeans.xml/MissingSerialVersionUID"/>
    <rule ref="rulesets/clone.xml/ProperCloneImplementation"/>
    <rule ref="rulesets/clone.xml/CloneThrowsCloneNotSupportedException"/>
