@@ -37,10 +37,17 @@ check.dependsOn {pmdMain}
 task pmdMain << {
 	new File("$buildDir/reports/pmd").mkdirs()
     ant.taskdef(name: 'pmd', classname: 'net.sourceforge.pmd.ant.PMDTask', classpath: configurations.pmd.asPath)
-    ant.pmd(shortFilenames: 'true', failonruleviolation: 'false', rulesetfiles: file('config/pmd/pmd.xml').toURI().toString()) {
-        formatter(type: 'xml', toFile: "$buildDir/reports/pmd/main.xml")
+    ant.pmd(
+    		shortFilenames: 'true', 
+    		failonruleviolation: 'false', 
+    		rulesetfiles: file('config/pmd/pmd.xml').toURI().toString(), 
+    		failuresPropertyName: 'pmdFailureCount'
+    		) {
+        formatter(type: 'xml', toFile: "$buildDir/reports/pmd/main.xml", toConsole: true)
         fileset(dir: 'src/main')
     }
     ant.xslt(in: "$buildDir/reports/pmd/main.xml", style: "config/pmd/pmd-nicerhtml.xsl", out: "$buildDir/reports/pmd/main.html")
+    def failureCount = ant.properties["pmdFailureCount"]
+    println "$failureCount PMD rule violations were found. See the report at: $buildDir/reports/pmd/main.html"
 }
 
