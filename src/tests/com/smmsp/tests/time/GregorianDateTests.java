@@ -100,6 +100,7 @@ public class GregorianDateTests {
 						+ Arrays.toString(dateArr));
 			}catch(IllegalArgumentException e){
 				// all good - expecting this.
+				assertTrue(true);
 			}
 		}
 		

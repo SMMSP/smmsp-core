@@ -27,14 +27,18 @@ import com.smmsp.core.net.LeapHistoryProcessor;
  * @author sean
  *
  */
-public class LeapHistoryProcessorTests {
+public final class LeapHistoryProcessorTests {
 
+	private LeapHistoryProcessorTests(){
+		// do nothing.
+	}
+	
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 
-		LeapHistoryProcessor proc = new LeapHistoryProcessor();
+		final LeapHistoryProcessor proc = new LeapHistoryProcessor();
 		proc.updateCache();
 		
 		proc.getLeapsForDate(null);

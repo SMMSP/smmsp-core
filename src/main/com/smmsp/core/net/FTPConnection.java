@@ -47,11 +47,11 @@ import com.smmsp.core.utils.ArrayUtils;
  */
 public class FTPConnection extends AbstractInternetConnection {
 
-	private static Logger LOG = Logger.getLogger(FTPConnection.class);
+	private static final Logger LOG = Logger.getLogger(FTPConnection.class);
 
-	private static Pattern PASV_PATTERN = Pattern.compile(".+\\((.+)\\).*");
+	private static final Pattern PASV_PATTERN = Pattern.compile(".+\\((.+)\\).*");
 	
-	private static int BUFFER_SIZE = 2048;
+	private static final int BUFFER_SIZE = 2048;
 	
 	private String _user = "anonymous";
 	private String _pass = "anonymous";

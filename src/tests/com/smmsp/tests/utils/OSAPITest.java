@@ -21,29 +21,35 @@
  */
 package com.smmsp.tests.utils;
 
+import org.apache.log4j.Logger;
+
 import com.smmsp.core.utils.OSAPI;
 
 /**
  * @author sean
  *
  */
-public class OSAPITest {
+public final class OSAPITest {
 
+	private static final Logger LOG = Logger.getLogger(OSAPITest.class);
+	
+	private OSAPITest(){
+		// do nothing
+	}
+	
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 
-		System.out.println("Properties:");
-		System.getProperties().list(System.out);
+		LOG.debug("Properties:");
+		LOG.debug(System.getProperties().toString());
 		
-		System.out.println();
-		System.out.println("OSClass: " + OSAPI.getOSName());
-		System.out.println("OSName: " + OSAPI.OS_NAME);
-		System.out.println("OSVer: " + OSAPI.OS_VER);
-		System.out.println("OSArch: " + OSAPI.OS_ARCH);
-		System.out.println();
-		System.out.println("CacheDir: " + OSAPI.getCacheDirectory());
+		LOG.debug("OSClass: " + OSAPI.getOSName());
+		LOG.debug("OSName: " + OSAPI.OS_NAME);
+		LOG.debug("OSVer: " + OSAPI.OS_VER);
+		LOG.debug("OSArch: " + OSAPI.OS_ARCH);
+		LOG.debug("CacheDir: " + OSAPI.getCacheDirectory());
 	}
 
 }

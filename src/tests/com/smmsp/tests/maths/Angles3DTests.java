@@ -35,8 +35,8 @@ import com.smmsp.math.Angles3D.AngleType;
  */
 public class Angles3DTests {
 
-	private static final double PIo2 = Math.PI / 2.;
-	private static final double TrPIo2 = 3. * Math.PI / 2.;
+	private static final double PIO2 = Math.PI / 2.;
+	private static final double TRPIO2 = 3. * Math.PI / 2.;
 	private static final double PI = Math.PI;
 	private static final double TPI = 2. * Math.PI;
 	
@@ -47,10 +47,11 @@ public class Angles3DTests {
 		rad = null;
 	}
 	
-	public void verifyThreeAngles(double i, double j, double k){
-		assertEquals(i, rad.get_thetaI(), 0.1);
-		assertEquals(j, rad.get_thetaJ(), 0.1);
-		assertEquals(k, rad.get_thetaK(), 0.1);
+	public void verifyThreeAngles(
+			final double i, final double j, final double k){
+		assertEquals(i, rad.getThetaI(), 0.1);
+		assertEquals(j, rad.getThetaJ(), 0.1);
+		assertEquals(k, rad.getThetaK(), 0.1);
 	}
 	
 	/**
@@ -58,31 +59,31 @@ public class Angles3DTests {
 	 */
 	@Test
 	public final void testToRadians() {
-		Angles3D ang = new Angles3D();
+		final Angles3D ang = new Angles3D();
 		
 		rad = ang.toRadians();
 		verifyThreeAngles(0, 0, 0);
 		
 		rad = new Angles3D(90, 0, 0).toRadians();
-		verifyThreeAngles(PIo2, 0, 0);
+		verifyThreeAngles(PIO2, 0, 0);
 		
 		rad = new Angles3D(0, 90, 0).toRadians();
-		verifyThreeAngles(0, PIo2, 0);
+		verifyThreeAngles(0, PIO2, 0);
 		
 		rad = new Angles3D(0, 0, 90).toRadians();
-		verifyThreeAngles(0, 0, PIo2);
+		verifyThreeAngles(0, 0, PIO2);
 		
 		rad = new Angles3D(180, 180, 180).toRadians();
 		verifyThreeAngles(PI, PI, PI);
 		
 		rad = new Angles3D(270, 270, 270).toRadians();
-		verifyThreeAngles(TrPIo2, TrPIo2, TrPIo2);
+		verifyThreeAngles(TRPIO2, TRPIO2, TRPIO2);
 		
 		rad = new Angles3D(360, 360, 360).toRadians();
 		verifyThreeAngles(0, 0, 0);
 		
 		rad = new Angles3D(450, 450, 450).toRadians();
-		verifyThreeAngles(PIo2, PIo2, PIo2);
+		verifyThreeAngles(PIO2, PIO2, PIO2);
 	}
 
 	/**
@@ -98,25 +99,25 @@ public class Angles3DTests {
 		rad = ang.toDegrees();
 		verifyThreeAngles(0, 0, 0);
 		
-		rad = new Angles3D(PIo2, 0, 0, AngleType.RADIANS).toDegrees();
+		rad = new Angles3D(PIO2, 0, 0, AngleType.RADIANS).toDegrees();
 		verifyThreeAngles(90, 0, 0);
 		
-		rad = new Angles3D(0, PIo2, 0, AngleType.RADIANS).toDegrees();
+		rad = new Angles3D(0, PIO2, 0, AngleType.RADIANS).toDegrees();
 		verifyThreeAngles(0, 90, 0);
 		
-		rad = new Angles3D(0, 0, PIo2, AngleType.RADIANS).toDegrees();
+		rad = new Angles3D(0, 0, PIO2, AngleType.RADIANS).toDegrees();
 		verifyThreeAngles(0, 0, 90);
 		
 		rad = new Angles3D(PI, PI, PI, AngleType.RADIANS).toDegrees();
 		verifyThreeAngles(180, 180, 180);
 		
-		rad = new Angles3D(TrPIo2, TrPIo2, TrPIo2, AngleType.RADIANS).toDegrees();
+		rad = new Angles3D(TRPIO2, TRPIO2, TRPIO2, AngleType.RADIANS).toDegrees();
 		verifyThreeAngles(270, 270, 270);
 		
 		rad = new Angles3D(TPI, TPI, TPI, AngleType.RADIANS).toDegrees();
 		verifyThreeAngles(0, 0, 0);
 		
-		final double exp = TPI + PIo2;
+		final double exp = TPI + PIO2;
 		rad = new Angles3D(exp, exp, exp, AngleType.RADIANS).toDegrees();
 		verifyThreeAngles(90, 90, 90);
 	}
@@ -132,4 +133,33 @@ public class Angles3DTests {
 		assertNotNull(ang.toString());
 	}
 
+	@Test
+	public final void testBasicMethods(){
+		Angles3D ang = new Angles3D(0, 0, 0);
+		Angles3D ang2 = new Angles3D(1, 2, 3);
+		
+		assertTrue(ang.hashCode() > 0);
+		assertFalse(ang.equals(ang2));
+		
+		ang.setThetaI(1);
+		assertEquals(ang.getThetaI(), 1, 0.1);
+		
+		ang.setThetaJ(2);
+		assertEquals(ang.getThetaJ(), 2, 0.1);
+		
+		ang.setThetaK(3);
+		assertEquals(ang.getThetaK(), 3, 0.1);
+		
+		assertEquals(ang.getType(), AngleType.DEGREES);
+		ang.setType(AngleType.RADIANS);
+		assertEquals(ang.getType(), AngleType.RADIANS);
+		
+		assertFalse(ang.equals(ang2));
+		ang.setType(AngleType.DEGREES);
+		
+		assertEquals(ang, ang2);
+		
+		Angles3D copy = new Angles3D(ang);
+		assertEquals(copy, ang);
+	}
 }

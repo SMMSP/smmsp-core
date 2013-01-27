@@ -1,6 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply from:'https://raw.github.com/breskeby/gradleplugins/master/emmaPlugin/emma.gradle'
+apply from:'https://raw.github.com/spmadden/gradleplugins/master/emmaPlugin/emma.gradle'
+
+configurations {
+    pmd
+}
 
 sourceSets {
 	main {
@@ -22,8 +26,21 @@ repositories {
 dependencies {
 		emma "emma:emma:2.0.5312"
 		emma "emma:emma_ant:2.0.5312"
+		pmd "net.sourceforge.pmd:pmd:5.0.1"
         testCompile 'junit:junit:4.+'
         compile 'log4j:log4j:1.+'
         compile 'org.rxtx:rxtx:2.1.7'
+}
+
+check.dependsOn {pmdMain}
+
+task pmdMain << {
+	new File("$buildDir/reports/pmd").mkdirs()
+    ant.taskdef(name: 'pmd', classname: 'net.sourceforge.pmd.ant.PMDTask', classpath: configurations.pmd.asPath)
+    ant.pmd(shortFilenames: 'true', failonruleviolation: 'false', rulesetfiles: file('config/pmd/pmd.xml').toURI().toString()) {
+        formatter(type: 'xml', toFile: "$buildDir/reports/pmd/main.xml")
+        fileset(dir: 'src/main')
+    }
+    ant.xslt(in: "$buildDir/reports/pmd/main.xml", style: "config/pmd/pmd-nicerhtml.xsl", out: "$buildDir/reports/pmd/main.html")
 }
 

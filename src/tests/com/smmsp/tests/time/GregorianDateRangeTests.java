@@ -45,7 +45,7 @@ public class GregorianDateRangeTests {
 
 	@Test
 	public final void testDateRangeEqual() {
-		GregorianDate date = new GregorianDate(1900, 1, 1);
+//		GregorianDate date = new GregorianDate(1900, 1, 1);
 	}
 	
 }

@@ -23,12 +23,14 @@ package com.smmsp.tests.time;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author sean
  *
  */
+@Ignore
 public class JulianDateTests {
 
 	/**
