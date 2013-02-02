@@ -243,7 +243,6 @@ public class HTTPConnection extends AbstractInternetConnection {
 			final StringBuffer outBuf = new StringBuffer();
 			int chr = 0;
 			while(readLen-- > 0 && (chr = read.read()) != -1){
-				System.out.print((char)chr);
 				outBuf.append((char)chr);
 			}
 			
