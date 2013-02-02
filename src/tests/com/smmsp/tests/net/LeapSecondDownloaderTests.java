@@ -20,7 +20,7 @@
 *    http://www.seanmadden.net/licensing for details.
 *
 */
-package com.smmsp.tests;
+package com.smmsp.tests.net;
 
 import static org.junit.Assert.*;
 

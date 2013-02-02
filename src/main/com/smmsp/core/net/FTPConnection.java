@@ -53,15 +53,17 @@ public class FTPConnection extends AbstractInternetConnection {
 	
 	private static final int BUFFER_SIZE = 2048;
 	
-	private String _user = "anonymous";
-	private String _pass = "anonymous";
-	private String _path = "";
-	private String _file = "";
-	private String _server = "";
-	private int _port = 21;
+	private String user = "anonymous";
+	private String pass = "anonymous";
+	private String path = "";
+	private String file = "";
+	private String server = "";
+	private int port = 21;
 
 	public FTPConnection(URL url) throws MalformedURLException {
-		LOG.debug("Created FTPConnection Object with URL: " + url);
+		if(LOG.isDebugEnabled()){
+			LOG.debug("Created FTPConnection Object with URL: " + url);
+		}
 
 		if (!"ftp".equals(url.getProtocol().toLowerCase())) {
 			throw new MalformedURLException("This is not an FTP url!");
@@ -72,21 +74,21 @@ public class FTPConnection extends AbstractInternetConnection {
 			if (parts.length > 2) {
 				throw new MalformedURLException();
 			} else if (parts.length == 1) {
-				_user = userinfo;
+				user = userinfo;
 			} else if (parts.length == 2) {
-				_user = parts[0];
-				_pass = parts[1];
+				user = parts[0];
+				pass = parts[1];
 			}
 		}
-		_path = url.getPath();
-		int lastSlashPos = _path.lastIndexOf('/');
-		_file = _path.substring(lastSlashPos + 1);
-		_path = _path.substring(0, lastSlashPos);
+		path = url.getPath();
+		int lastSlashPos = path.lastIndexOf('/');
+		file = path.substring(lastSlashPos + 1);
+		path = path.substring(0, lastSlashPos);
 				
-		_server = url.getHost();
+		server = url.getHost();
 
 		if (url.getPort() > 0) {
-			_port = url.getPort();
+			port = url.getPort();
 		}
 	}
 
@@ -101,25 +103,25 @@ public class FTPConnection extends AbstractInternetConnection {
 				SocketChannel dataSock = SocketChannel.open();
 			){
 			
-			commandSock.connect(new InetSocketAddress(_server, _port));
+			commandSock.connect(new InetSocketAddress(server, port));
 			
 			// read status line
 			readAndVerifyStatus("220", commandSock);
 			
 			// log in with user and password.
-			sendCommand("USER " + _user + "\r\n", commandSock);
+			sendCommand("USER " + user + "\r\n", commandSock);
 			
 			// read user response
 			readAndVerifyStatus("331", commandSock);
 			
 			// send password.
-			sendCommand("PASS " + _pass + "\r\n", commandSock);
+			sendCommand("PASS " + pass + "\r\n", commandSock);
 			
 			// read pass response
 			readAndVerifyStatus("230", commandSock);
 			
 			// change directory to target path
-			sendCommand("CWD " + _path + "\r\n", commandSock);
+			sendCommand("CWD " + path + "\r\n", commandSock);
 			
 			// read directory change successful.
 			readAndVerifyStatus("250", commandSock);
@@ -138,9 +140,9 @@ public class FTPConnection extends AbstractInternetConnection {
 			int dataPort = Integer.valueOf(octets[4]) * 256 + Integer.valueOf(octets[5]);
 			
 			// request file
-			sendCommand("RETR " + _file + "\r\n", commandSock);
+			sendCommand("RETR " + file + "\r\n", commandSock);
 			
-			dataSock.connect(new InetSocketAddress(_server, dataPort));
+			dataSock.connect(new InetSocketAddress(server, dataPort));
 			
 			return new ByteArrayInputStream(consumeEntireChannel(dataSock));
 			
