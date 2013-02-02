@@ -21,6 +21,7 @@
 *
 */
 package com.smmsp.core;
+
 /**
  * This enumeration specifies the classification of the TLE set.
  * For most cases, (unless somehow the DoD got a copy of this 
@@ -31,5 +32,15 @@ package com.smmsp.core;
 public enum Classification {
 	CLASSIFIED,
 	UNCLASSIFIED,
-	SECRET
+	SECRET;
+	
+	public static Classification fromChar(char c){
+		if(c == 'U' || c == 'u'){
+			return Classification.UNCLASSIFIED;
+		}else if(c == 'S' || c == 's'){
+			return Classification.SECRET;
+		}else{
+			return Classification.CLASSIFIED;
+		}
+	}
 }

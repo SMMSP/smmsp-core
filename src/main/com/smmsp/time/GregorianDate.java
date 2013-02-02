@@ -116,6 +116,28 @@ public class GregorianDate implements Comparable<GregorianDate>, TimeInstant {
 		return false;
 
 	}
+	
+	public static GregorianDate fromYearAndDay(
+			final int year, 
+			final int day){
+		
+		final boolean leap = isLeapYear(year);
+		final int[] monthDays;
+		if(leap){
+			monthDays = TimeConstants.GREGORIAN_DAYS_IN_LEAP_MONTH;
+		}else{
+			monthDays = TimeConstants.GREGORIAN_DAYS_IN_MONTH;
+		}
+		
+		int monthIdx = 0;
+		int totalDays = day;
+		while(totalDays > 0){
+			totalDays -= monthDays[monthIdx++];
+		}
+		totalDays += monthDays[--monthIdx];
+		
+		return new GregorianDate(year, monthIdx + 1, totalDays);
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

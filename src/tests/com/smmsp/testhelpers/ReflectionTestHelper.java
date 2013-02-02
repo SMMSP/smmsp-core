@@ -4,6 +4,8 @@
 package com.smmsp.testhelpers;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author sean
@@ -66,4 +68,39 @@ public abstract class ReflectionTestHelper {
 		return obj;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <T, R> T CallPrivateMethod(
+			R instance, 
+			String method, 
+			Object... args){
+		Class<?>[] classes = new Class<?>[args.length];
+		
+		int i = 0;
+		for(Object o : args){
+			classes[i++] = o.getClass();
+		}
+		
+		try {
+			Method m = instance.getClass().getMethod(method, classes);
+			
+			boolean accessible = m.isAccessible();
+			m.setAccessible(true);
+			T obj = (T) m.invoke(instance, args);
+			m.setAccessible(accessible);
+			
+			return obj;
+		} catch (NoSuchMethodException e){
+			e.printStackTrace();
+		}catch(SecurityException  e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }
