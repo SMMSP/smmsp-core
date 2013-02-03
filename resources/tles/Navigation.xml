@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locations name="Navigational">
+	<location name="GPS">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/gps-ops.txt</httpUrl>
+		<description>GPS Operational Satellites</description>
+	</location>
+	<location name="GLONASS">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/glo-ops.txt</httpUrl>
+		<description>GLONASS Operational Satellites</description>
+	</location>
+	<location name="Galileo">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/galileo.txt</httpUrl>
+		<description>Galileo Operational Satellites</description>
+	</location>
+	<location name="NavAugmentation">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/sbas.txt</httpUrl>
+		<description>Satellite-Based Augmentation Systems (WAAS/EGNOS/MSAS)</description>
+	</location>
+	<location name="NavyTransit">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/nnss.txt</httpUrl>
+		<description>Navy Navigational Satellite System (NNSS) - Precursor to GPS</description>
+	</location>
+	<location name="RussianLEO">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/musson.txt</httpUrl>
+		<description>Russian Low-Earth-Orbit COSMOS Navigational Satellites</description>
+	</location>
+</locations>

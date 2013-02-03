@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locations name="Scientific">
+	<location name="SpaceEarthScience">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/science.txt</httpUrl>
+		<description>Space and Earth Sciences Satellites</description>
+	</location>
+	<location name="Geodetic">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/geodetic.txt</httpUrl>
+		<description>Geodetic Satellites</description>
+	</location>
+	<location name="Engineering">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/engineering.txt</httpUrl>
+		<description>Engineering Satellites</description>
+	</location>
+	<location name="Education">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/education.txt</httpUrl>
+		<description>Educational Satellites</description>
+	</location>
+</locations>

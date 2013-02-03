@@ -23,6 +23,7 @@ package com.smmsp.core.tle;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="locations")
 public class TLESetList {
 
+	@XmlAttribute
+	private String name;
+	
 	@XmlElement(name="location")
 	private List<TLESetLocation> locations;
 	
@@ -55,6 +59,10 @@ public class TLESetList {
 
 	public void setLocationList(List<TLESetLocation> locations) {
 		this.locations = locations;
+	}
+	
+	public String getName(){
+		return name;
 	}
 
 	/* (non-Javadoc)

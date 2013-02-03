@@ -21,8 +21,18 @@
  */
 package com.smmsp.core.tle;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -32,7 +42,6 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.log4j.Logger;
 
 import com.smmsp.core.net.HTTPCachedFile;
-import com.smmsp.tests.core.CelestrakCacheUpdater;
 
 /**
  * Three/Two Line Element sets provided by Celestrak.
@@ -47,45 +56,39 @@ public final class CelestrackTLEs {
 		// does nothing.
 	}
 
-	/**
-	 * Special Interest satellites from Celestrak
-	 */
-	public static final List<TLESetLocation> SPECIAL_INTEREST;
-	static {
-		SPECIAL_INTEREST = getListFromXMLLocation("/tles/SpecialInterest.xml");
+	public static final LinkedHashMap<String, List<TLESetLocation>> 
+			AVAILABLE_TLE_LOCATIONS = new LinkedHashMap<>();
+	static{
+		try {
+			final URL url = CelestrackTLEs.class.getResource("/tles/");
+			final URI uri = url.toURI();
+			final Path path = Paths.get(uri);
+			final DirectoryStream<Path> ds = Files.newDirectoryStream(path, "*.xml");
+			final Iterator<Path> rator = ds.iterator();
+			while(rator.hasNext()){
+				final Path p = rator.next();
+				final TLESetList list = getListFromXMLLocation(p);
+				AVAILABLE_TLE_LOCATIONS.put(list.getName(), list.getLocationList());
+			}
+		} catch (IOException e) {
+			log.error(e);
+		} catch (URISyntaxException e) {
+			log.error(e);
+		}
 	}
 	
-	/**
-	 * Weather & Earth Resources Satellites from celestrak
-	 */
-	public static final List<TLESetLocation> WEATHER;
-	static {
-		WEATHER = getListFromXMLLocation("/tles/Weather.xml");
-	}
-	
-	/**
-	 * Communications satellites from Celestrak
-	 */
-	public static final List<TLESetLocation> COMMUNICATIONS;
-	static {
-		COMMUNICATIONS = getListFromXMLLocation("/tles/Communications.xml");
-	}
-
 	/**
 	 * Updates the local caches for these files.
 	 */
 	public static void updateCache() {
-		List<TLESetLocation> allLocations = new LinkedList<>();
-		allLocations.addAll(SPECIAL_INTEREST);
-		allLocations.addAll(WEATHER);
-		allLocations.addAll(COMMUNICATIONS);
-
-		for (TLESetLocation tle : allLocations) {
-			final HTTPCachedFile file = new HTTPCachedFile(tle.getName(),
-					tle.getHttpUrl());
-			if (file.cacheNeedsUpdate()) {
-				file.updateCache();
-				log.info("Updated cache for " + tle.getName());
+		for (List<TLESetLocation> locations : AVAILABLE_TLE_LOCATIONS.values()) {
+			for(TLESetLocation tle: locations){
+				final HTTPCachedFile file = new HTTPCachedFile(tle.getName(),
+						tle.getHttpUrl());
+				if (file.cacheNeedsUpdate()) {
+					file.updateCache();
+					log.info("Updated cache for " + tle.getName());
+				}
 			}
 		}
 	}
@@ -96,19 +99,21 @@ public final class CelestrackTLEs {
 	 * @param xmlLocation
 	 * @return
 	 */
-	protected static List<TLESetLocation> getListFromXMLLocation(
-			final String xmlLocation) {
+	protected static TLESetList getListFromXMLLocation(
+			final Path xmlLocation) {
 		try {
-			InputStream is = CelestrakCacheUpdater.class
-					.getResourceAsStream(xmlLocation);
-
+			InputStream is = Files.newInputStream(xmlLocation,
+					StandardOpenOption.READ
+					);
 			JAXBContext ctx = JAXBContext.newInstance(TLESetList.class);
 			Unmarshaller unmarsh = ctx.createUnmarshaller();
 			TLESetList list = (TLESetList) unmarsh.unmarshal(is);
-			return list.getLocationList();
+			return list;
 
 		} catch (JAXBException e) {
 			log.error("JAXB XML error", e);
+		} catch (IOException e) {
+			log.error("IO Exception", e);
 		}
 		return null;
 	}

@@ -21,14 +21,12 @@
  */
 package com.smmsp.tests.core;
 
-import java.io.InputStream;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import java.util.List;
+import java.util.Map;
 
 import com.smmsp.core.tle.CelestrackTLEs;
-import com.smmsp.core.tle.TLESetList;
+import com.smmsp.core.tle.TLESetLocation;
 
 /**
  * @author sean
@@ -41,20 +39,10 @@ public class CelestrakCacheUpdater {
 	 */
 	public static void main(String[] args) {
 		CelestrackTLEs.updateCache();
-
-		try {
-			InputStream is = CelestrakCacheUpdater.class
-					.getResourceAsStream("/tles/SpecialInterest.xml");
-
-			JAXBContext ctx = JAXBContext.newInstance(TLESetList.class);
-			Unmarshaller unmarsh = ctx.createUnmarshaller();
-			TLESetList list = (TLESetList) unmarsh.unmarshal(is);
-
-			System.out.println(list);
-		} catch (JAXBException e) {
-			e.printStackTrace();
+		for(Map.Entry<String, List<TLESetLocation>> ent : 
+			CelestrackTLEs.AVAILABLE_TLE_LOCATIONS.entrySet()){
+			System.out.println(ent);
 		}
-
 	}
 
 }

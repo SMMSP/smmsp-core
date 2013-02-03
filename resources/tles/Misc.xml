@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locations name="Miscellaneous">
+	<location name="MiscMilitary">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/military.txt</httpUrl>
+		<description>Miscellaneous Military Satellites</description>
+	</location>
+	<location name="RadarCalibration">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/radar.txt</httpUrl>
+		<description>Radar Calibration (CALSPHERE) Satellites</description>
+	</location>
+	<location name="CubeSats">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/cubesat.txt</httpUrl>
+		<description>CubeSat Satellites</description>
+	</location>
+
+</locations>
