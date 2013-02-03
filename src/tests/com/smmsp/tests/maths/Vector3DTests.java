@@ -93,4 +93,5 @@ public class Vector3DTests {
 		assertEquals(DxA, A.crossProduct(B).crossProduct(A));
 		
 	}
+	
 }
