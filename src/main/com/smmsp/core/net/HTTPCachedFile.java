@@ -64,11 +64,6 @@ public class HTTPCachedFile extends Cachable {
 	 */
 	@Override
 	public void updateCache() throws CacheException {
-		// if we don't need to update the cache, bail out.
-		if (!cacheNeedsUpdate()) {
-			return;
-		}
-
 		Path fullCachedFile = getPathToCache();
 
 		try {

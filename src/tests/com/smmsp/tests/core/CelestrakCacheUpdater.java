@@ -1,5 +1,5 @@
 /*
- * LeapHistoryProcessorTests.java
+ * CelestrakCacheUpdater.java
  * 
  * Copyright (C) 2013 Sean P Madden
  * 
@@ -19,28 +19,21 @@
  * If you would like to license this code under the GNU LGPL, please
  * see http://www.seanmadden.net/licensing for details.
  */
-package com.smmsp.tests.net;
+package com.smmsp.tests.core;
 
-import com.smmsp.core.net.LeapHistoryProcessor;
+import com.smmsp.core.tle.CelestrackTLEs;
 
 /**
  * @author sean
  *
  */
-public final class LeapHistoryProcessorTests {
+public class CelestrakCacheUpdater {
 
-	private LeapHistoryProcessorTests(){
-		// do nothing.
-	}
-	
 	/**
 	 * @param args
 	 */
-	public static void main(final String[] args) {
-
-		final LeapHistoryProcessor proc = new LeapHistoryProcessor();
-		
-		proc.getLeapsForDate(null);
+	public static void main(String[] args) {
+		CelestrackTLEs.updateCache();
 	}
 
 }
