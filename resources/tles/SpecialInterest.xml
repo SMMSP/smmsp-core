@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locations>
+	<location name="Last30DaysLaunches">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/tle-new.txt</httpUrl>
+		<description>New launches in the last 30 days.</description>
+	</location>
+	<location name="SpaceStations">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/stations.txt</httpUrl>
+		<description>The few space stations in orbit</description>
+	</location>
+	<location name="TopBrightest">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/visual.txt</httpUrl>
+		<description>The top 100 (or so) brightest satellites</description>
+	</location>
+	<location name="Fengyun1C-Debris">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/1999-025.txt</httpUrl>
+		<description>Fengyun-1C: Weather satellite destroyed by Chinese missile test</description>
+	</location>
+	<location name="Iridium33-Debris">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/iridium-33-debris.txt</httpUrl>
+		<description>Iridium-33: Destroyed in collision with Cosmos-2251 in 2009</description>
+	</location>
+	<location name="Cosmos2251-Debris">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/cosmos-2251-debris.txt</httpUrl>
+		<description>Cosmos-2251: Destroyed in collision with Iridium-33 in 2009</description>
+	</location>
+	<location name="BreezeMRC-Debris">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/2012-044.txt</httpUrl>
+		<description>Remains of a Russian 2nd stage rocket launch (debris after breakup)</description>
+	</location>
+</locations>

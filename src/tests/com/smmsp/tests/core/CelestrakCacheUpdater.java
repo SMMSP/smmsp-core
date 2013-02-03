@@ -21,11 +21,18 @@
  */
 package com.smmsp.tests.core;
 
+import java.io.InputStream;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
 import com.smmsp.core.tle.CelestrackTLEs;
+import com.smmsp.core.tle.TLESetList;
 
 /**
  * @author sean
- *
+ * 
  */
 public class CelestrakCacheUpdater {
 
@@ -34,6 +41,20 @@ public class CelestrakCacheUpdater {
 	 */
 	public static void main(String[] args) {
 		CelestrackTLEs.updateCache();
+
+		try {
+			InputStream is = CelestrakCacheUpdater.class
+					.getResourceAsStream("/tles/SpecialInterest.xml");
+
+			JAXBContext ctx = JAXBContext.newInstance(TLESetList.class);
+			Unmarshaller unmarsh = ctx.createUnmarshaller();
+			TLESetList list = (TLESetList) unmarsh.unmarshal(is);
+
+			System.out.println(list);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

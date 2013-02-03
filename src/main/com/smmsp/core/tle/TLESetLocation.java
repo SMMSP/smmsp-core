@@ -21,14 +21,113 @@
  */
 package com.smmsp.core.tle;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
+ * A TLE Set Location provides a Name, URL, and Description for a
+ * NORAD Three/Two line element set.  This clas was designed to be
+ * used with Celestrak TLEs, but TLEs provided on any HTTP url can
+ * be used with this system.
+ * 
  * @author sean
  *
  */
-public abstract class TLESetLocation {
+@XmlRootElement(name="location")
+public class TLESetLocation {
 
-	public String name;
-	public String httpUrl;
-	public String description;
+	/**
+	 * The Name of this Location 
+	 */
+	private String name;
+	
+	/**
+	 * The URl of this location
+	 */
+	private String httpUrl;
+	
+	/**
+	 * The description of this location.
+	 */
+	private String description;
+
+	public TLESetLocation(){
+		// does nothing
+	}
+	
+	/**
+	 * Constructor!
+	 * @param name
+	 * @param httpUrl
+	 * @param description
+	 */
+	public TLESetLocation(String name, String httpUrl, String description) {
+		this.name = name;
+		this.httpUrl = httpUrl;
+		this.description = description;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	@XmlAttribute
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the httpUrl
+	 */
+	public String getHttpUrl() {
+		return httpUrl;
+	}
+
+	/**
+	 * @param httpUrl the httpUrl to set
+	 */
+	@XmlElement
+	public void setHttpUrl(String httpUrl) {
+		this.httpUrl = httpUrl;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	@XmlElement
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TLESetLocation [name=");
+		builder.append(name);
+		builder.append(", httpUrl=");
+		builder.append(httpUrl);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 	
 }

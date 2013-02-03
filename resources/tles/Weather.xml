@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locations>
+	<location name="Weather">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/weather.txt</httpUrl>
+		<description>All general weather satellites</description>
+	</location>
+	<location name="NOAA">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/noaa.txt</httpUrl>
+		<description>All NOAA Satellites</description>
+	</location>
+	<location name="GOES">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/goes.txt</httpUrl>
+		<description>NOAA's Geostationary Operational Environment Satellites (GOES)</description>
+	</location>
+	<location name="EarthResources">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/resource.txt</httpUrl>
+		<description>General Earth Resources Satellites</description>
+	</location>
+	<location name="SARSAT">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/sarsat.txt</httpUrl>
+		<description>Search and Rescue satellites</description>
+	</location>
+	
+	<location name="DisasterMonitoring">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/dmc.txt</httpUrl>
+		<description>Disaster Monitoring satellites</description>
+	</location>
+	
+	<location name="TDRSS">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/tdrss.txt</httpUrl>
+		<description>NASA's Tracking and Data Relay Satellite System (TDRSS)</description>
+	</location>
+	
+</locations>

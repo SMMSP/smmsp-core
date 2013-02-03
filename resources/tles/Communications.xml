@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locations>
+	<location name="Geostationary">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/geo.txt</httpUrl>
+		<description>Geostationary Communications satellites</description>
+	</location>
+	<location name="Intelsat">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/intelsat.txt</httpUrl>
+		<description>Intelsat Satellites</description>
+	</location>
+	<location name="Gorizont">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/gorizont.txt</httpUrl>
+		<description>Gorizont Satellites</description>
+	</location>
+	<location name="Raduga">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/raduga.txt</httpUrl>
+		<description>Raduga Satellites</description>
+	</location>
+	<location name="Molniya">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/molniya.txt</httpUrl>
+		<description>Molniya Satellites</description>
+	</location>
+	<location name="Iridium">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/iridium.txt</httpUrl>
+		<description>Iridium Satellites</description>
+	</location>
+	<location name="Orbcomm">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/orbcomm.txt</httpUrl>
+		<description>Orbcomm Satellites</description>
+	</location>
+	<location name="Globalstar">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/globalstar.txt</httpUrl>
+		<description>Globalstar Satellites</description>
+	</location>
+	<location name="AmateurRadio">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/amateur.txt</httpUrl>
+		<description>Amateur Radio Satellites</description>
+	</location>
+	<location name="Experimental">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/x-comm.txt</httpUrl>
+		<description>Experimental Communications Satellites</description>
+	</location>
+	<location name="OtherComms">
+		<httpUrl>http://www.celestrak.com/NORAD/elements/other-comm.txt</httpUrl>
+		<description>Other (non-specific) Communications satellites</description>
+	</location>
+</locations>
