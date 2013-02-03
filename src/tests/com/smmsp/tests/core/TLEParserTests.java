@@ -26,8 +26,8 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Test;
 
-import com.smmsp.core.TLE;
-import com.smmsp.core.TLEProcessor;
+import com.smmsp.core.tle.TLE;
+import com.smmsp.core.tle.TLEProcessor;
 
 /**
  * @author sean

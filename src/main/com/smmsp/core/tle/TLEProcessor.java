@@ -19,7 +19,7 @@
  * If you would like to license this code under the GNU LGPL, please
  * see http://www.seanmadden.net/licensing for details.
  */
-package com.smmsp.core;
+package com.smmsp.core.tle;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +28,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import com.smmsp.core.Classification;
 import com.smmsp.time.GregorianDate;
 
 /**
@@ -112,13 +113,22 @@ public final class TLEProcessor {
 			}
 			final double epochDay = Double.valueOf(line.substring(20, 32).trim());
 			out.dotMeanMotion = Double.valueOf(line.substring(33, 43).trim());
+			
 			String dotdot = line.substring(44, 52).trim();
 			dotdot = dotdot.replace("-", "E-");
-			out.dotDotMeanMotion = Double.valueOf(dotdot);
+			if(dotdot.startsWith("E-")){
+				dotdot = dotdot.substring(1);
+			}
+			out.dotDotMeanMotion = Double.valueOf(dotdot)
+					;
 			String bstar = line.substring(53, 61).trim();
 			bstar = bstar.replace("-", "E-");
+			if(bstar.startsWith("E-")){
+				bstar = bstar.substring(1);
+			}
 			bstar = bstar.replace("+", "E+");
 			out.bstarDragTerm = Double.valueOf(bstar);
+			
 			out.elementSetNumber = Integer.valueOf(line.substring(63, 68)
 					.trim());
 

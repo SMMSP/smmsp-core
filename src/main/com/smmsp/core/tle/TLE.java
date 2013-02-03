@@ -18,8 +18,9 @@
  * see
  * http://www.seanmadden.net/licensing for details.
  */
-package com.smmsp.core;
+package com.smmsp.core.tle;
 
+import com.smmsp.core.Classification;
 import com.smmsp.time.TimeInstant;
 
 /**

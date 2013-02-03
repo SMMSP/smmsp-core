@@ -1,5 +1,5 @@
 /*
- * TLEDownloaderTest.java
+ * TLEException.java
  * 
  * Copyright (C) 2013 Sean P Madden
  * 
@@ -19,34 +19,39 @@
  * If you would like to license this code under the GNU LGPL, please
  * see http://www.seanmadden.net/licensing for details.
  */
-package com.smmsp.tests.core;
-
-import java.io.InputStream;
-
-import com.smmsp.core.net.HTTPConnection;
-import com.smmsp.core.tle.TLE;
-import com.smmsp.core.tle.TLEProcessor;
+package com.smmsp.core.tle;
 
 /**
  * @author sean
  *
  */
-public class TLEDownloaderTest {
+public class TLEException extends RuntimeException {
 
 	/**
-	 * @param args
+	 * 
 	 */
-	public static void main(String[] args) throws Exception{
-		String url = "http://www.celestrak.com/NORAD/elements/tle-new.txt";
-		HTTPConnection con = new HTTPConnection(url);
-		InputStream is = con.getDataStream();
-		
-		TLE[] tles = TLEProcessor.fromInputStream(is);
-		
-		for(TLE t : tles){
-			System.out.println(t);
-		}
-		
+	private static final long serialVersionUID = -6264517313895920529L;
+
+	/**
+	 * @param arg0
+	 * @param arg1
+	 */
+	public TLEException(String arg0, Throwable arg1) {
+		super(arg0, arg1);
+	}
+
+	/**
+	 * @param arg0
+	 */
+	public TLEException(String arg0) {
+		super(arg0);
+	}
+
+	/**
+	 * @param arg0
+	 */
+	public TLEException(Throwable arg0) {
+		super(arg0);
 	}
 
 }
