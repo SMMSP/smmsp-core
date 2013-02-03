@@ -23,33 +23,37 @@ package com.smmsp.core.net;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.ProtocolException;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.FileTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.smmsp.core.utils.OSAPI;
 import com.smmsp.time.GregorianDate;
 import com.smmsp.time.GregorianDateRange;
 import com.smmsp.time.TimeConstants;
 
 /**
+ * Downloads the leaps file from IANA tz database and provides
+ * a method for determining how many leaps existed at a point in the
+ * past.
+ * 
  * @author sean
  *
  */
-public class LeapHistoryProcessor implements Cachable{
+public class LeapHistoryProcessor{
 	
+	/**
+	 * Log file!
+	 */
 	private static final Logger log = Logger.getLogger(LeapHistoryProcessor.class);
 	
+	/**
+	 * The URL for which we will download the leaps file.
+	 */
 	private static final String LEAPS_URL = "ftp://ftp.iana.org/tz/data/leapseconds";
 	
 	/**
@@ -58,111 +62,27 @@ public class LeapHistoryProcessor implements Cachable{
 	private static final String LEAPS_CACHE_FILE = "leapseconds";
 	
 	/**
-	 * Maximum length before the cache expires (1 week in seconds)
+	 * The FTP cached file that we're going to use.
 	 */
-	private static final int MAX_CACHE_TIMEOUT = 604800;  
-
+	private static final FTPCachedFile LEAPS_FILE = 
+			new FTPCachedFile(LEAPS_CACHE_FILE, LEAPS_URL);
+	
 	/**
 	 * Internal storage bit for the leaps history
 	 */
 	private LinkedHashMap<GregorianDateRange, Integer> _leapsRange;
 	
-	/* (non-Javadoc)
-	 * @see com.smmsp.core.net.Cachable#getPathToCache()
-	 */
-	@Override
-	public Path getPathToCache(){
-		Path fullCachedFile = Paths.get(
-				OSAPI.getCacheDirectory().toString(),
-				LEAPS_CACHE_FILE
-				);
-		return fullCachedFile;
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.smmsp.core.net.Cachable#cacheNeedsUpdate()
-	 */
-	@Override
-	public boolean cacheNeedsUpdate() throws CacheException{
-		try {
-			OSAPI.ensureCacheDirExists();
-		} catch (IOException e) {
-			// This shouldn't happen, but if it does - log an error.
-			log.error("Could not create cache directory.", e);
-			throw new CacheException("Could not create cache directory.", e);
-		}
-		
-		boolean needsDownload = false;
-		Path fullCachedFile = getPathToCache();
-		
-		if(Files.notExists(fullCachedFile)){
-			needsDownload = true;
-		}else{
-			try {
-				FileTime time = Files.getLastModifiedTime(fullCachedFile);
-				FileTime now = FileTime.fromMillis(
-						System.currentTimeMillis() + 
-						MAX_CACHE_TIMEOUT * 1000);
-				
-				if(now.compareTo(time) < 0 ){
-					//cache is invalidated.
-					needsDownload = true;
-				}
-			} catch (IOException e) {
-				log.error("Unable to get file modification time on leaps cache", e);
-				throw new CacheException("Unable to get file modification time on leaps cache", e);
-			}
-		}
-		
-		return needsDownload;
-	}
-	
-	/* (non-Javadoc)
-	 * @see com.smmsp.core.net.Cachable#checkCache()
-	 */
-	public void updateCache(){
-		// if we don't need to update the cache, bail out.
-		if(!cacheNeedsUpdate()){
-			return;
-		}
-		
-		Path fullCachedFile = getPathToCache();
-		
-		try {
-			FTPConnection conn = new FTPConnection(LEAPS_URL);
-			
-			ReadableByteChannel ftpChan = Channels.newChannel(conn.getDataStream());
-			
-			// create the file if it doesn't exist and
-			// hose it if it does
-			FileChannel cachedFile = FileChannel.open(
-					fullCachedFile, 
-					StandardOpenOption.CREATE, 
-					StandardOpenOption.WRITE, 
-					StandardOpenOption.TRUNCATE_EXISTING);
-			
-			// pipe it to the file.
-			cachedFile.transferFrom(ftpChan, 0, Integer.MAX_VALUE);
-		} catch (ProtocolException e) {
-			e.printStackTrace();
-			log.error("Error with FTP download from IANA.", e);
-		} catch (IOException e){
-			e.printStackTrace();
-			log.error("Error file file IO.", e);
-		}
-		
-	}
 	
 	/**
 	 * Actually go ahead and parse the file, pulling out the history
 	 * and populating the internal data sites
 	 */
 	private void populateHistory(){
-		if(cacheNeedsUpdate()){
-			updateCache();
+		if(LEAPS_FILE.cacheNeedsUpdate()){
+			LEAPS_FILE.updateCache();
 		}
 		
-		Path fullCachedFile = getPathToCache();
+		Path fullCachedFile = LEAPS_FILE.getPathToCache();
 		
 		try {
 			FileChannel cachedFile = FileChannel.open(

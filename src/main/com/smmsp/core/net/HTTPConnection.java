@@ -198,6 +198,8 @@ public class HTTPConnection extends AbstractInternetConnection {
 			}
 			
 			
+			headers.put("Content-Length", ""+ body.length());
+			
 			for(Map.Entry<String, String> ent : headers.entrySet()){
 				LOG.debug("Header=" + ent.getKey() + ": " + ent.getValue());
 				request.append(ent.getKey());
