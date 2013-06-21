@@ -25,6 +25,7 @@ package com.smmsp.tests;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.smmsp.astro.KeplerianOrbit;
@@ -36,6 +37,7 @@ import com.smmsp.time.UnixTime;
  *
  * @author Sean P Madden
  */
+@Ignore
 public class KeplerianOrbitPropTimeTests {
 	
 	private KeplerianOrbit kep;
@@ -45,7 +47,7 @@ public class KeplerianOrbitPropTimeTests {
 	 * 
 	 * @throws java.lang.Exception
 	 */
-	@Before
+	@Before 
 	public void setUp() throws Exception {
 		kep = new KeplerianOrbit(new UnixTime(2012, 10, 12));
 	}

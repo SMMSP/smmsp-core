@@ -20,7 +20,6 @@
  */
 package com.smmsp.astro;
 
-import com.smmsp.time.TimeException;
 import com.smmsp.time.TimeInstant;
 import com.smmsp.time.UnixTime;
 
@@ -31,34 +30,26 @@ import com.smmsp.time.UnixTime;
  */
 public class KeplerianOrbit {
 
-	private TimeInstant epoch = new UnixTime();
+	TimeInstant epoch = new UnixTime();
 
-	private final double inclination = 0;
+	double inclination = 0;
 
-	private final double raan = 0;
+	double raan = 0;
 
-	private final double eccentricity = 0;
+	double eccentricity = 0;
 
-	private final double argumentOfPerigee = 0;
+	double argumentOfPerigee = 0;
 
-	private final double meanAnomaly = 0;
+	double meanAnomaly = 0;
 
-	private final double meanMotion = 0;
+	double meanMotion = 0;
 
-	public KeplerianOrbit(final TimeInstant e) {
-		this.epoch = e;
+	public KeplerianOrbit(TimeInstant t){
+		
 	}
-
-	public synchronized double getPropogationTime(final TimeInstant atTime)
-			throws TimeException {
-		double propTimeInSolarDays = 0;
-		propTimeInSolarDays = atTime.toUnixTime().toTimestamp()
-				- this.epoch.toUnixTime().toTimestamp();
-
-		// a solar day is exactly 24 hours long
-		propTimeInSolarDays /= 86400;
-
-		return propTimeInSolarDays;
+	
+	public int getPropogationTime(TimeInstant t){
+		return 0;
 	}
 
 }

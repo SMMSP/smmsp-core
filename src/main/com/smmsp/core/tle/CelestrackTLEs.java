@@ -34,6 +34,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -50,15 +51,37 @@ import com.smmsp.core.net.HTTPCachedFile;
  */
 public final class CelestrackTLEs {
 
-	private static final Logger log = Logger.getLogger(CelestrackTLEs.class);
+	private static final Logger LOG = Logger.getLogger(CelestrackTLEs.class);
 
 	private CelestrackTLEs() {
 		// does nothing.
 	}
 
-	public static final LinkedHashMap<String, List<TLESetLocation>> 
+	public static final Map<String, List<TLESetLocation>> 
 			AVAILABLE_TLE_LOCATIONS = new LinkedHashMap<>();
 	static{
+		reloadFromTLEFiles();
+	}
+	
+	/**
+	 * Updates the local caches for these files.
+	 */
+	public static void updateCache() {
+		for (final List<TLESetLocation> locations : AVAILABLE_TLE_LOCATIONS.values()) {
+			for(final TLESetLocation tle: locations){
+				final HTTPCachedFile file = new HTTPCachedFile(tle.getName(),
+						tle.getHttpUrl());
+				if (file.cacheNeedsUpdate()) {
+					file.updateCache();
+					LOG.info("Updated cache for " + tle.getName());
+				}
+			}
+		}
+		reloadFromTLEFiles();
+	}
+	
+	protected static void reloadFromTLEFiles(){
+		AVAILABLE_TLE_LOCATIONS.clear();
 		try {
 			final URL url = CelestrackTLEs.class.getResource("/tles/");
 			final URI uri = url.toURI();
@@ -71,25 +94,9 @@ public final class CelestrackTLEs {
 				AVAILABLE_TLE_LOCATIONS.put(list.getName(), list.getLocationList());
 			}
 		} catch (IOException e) {
-			log.error(e);
+			LOG.error(e);
 		} catch (URISyntaxException e) {
-			log.error(e);
-		}
-	}
-	
-	/**
-	 * Updates the local caches for these files.
-	 */
-	public static void updateCache() {
-		for (List<TLESetLocation> locations : AVAILABLE_TLE_LOCATIONS.values()) {
-			for(TLESetLocation tle: locations){
-				final HTTPCachedFile file = new HTTPCachedFile(tle.getName(),
-						tle.getHttpUrl());
-				if (file.cacheNeedsUpdate()) {
-					file.updateCache();
-					log.info("Updated cache for " + tle.getName());
-				}
-			}
+			LOG.error(e);
 		}
 	}
 
@@ -102,18 +109,16 @@ public final class CelestrackTLEs {
 	protected static TLESetList getListFromXMLLocation(
 			final Path xmlLocation) {
 		try {
-			InputStream is = Files.newInputStream(xmlLocation,
+			final InputStream is = Files.newInputStream(xmlLocation,
 					StandardOpenOption.READ
 					);
-			JAXBContext ctx = JAXBContext.newInstance(TLESetList.class);
-			Unmarshaller unmarsh = ctx.createUnmarshaller();
-			TLESetList list = (TLESetList) unmarsh.unmarshal(is);
-			return list;
-
+			final JAXBContext ctx = JAXBContext.newInstance(TLESetList.class);
+			final Unmarshaller unmarsh = ctx.createUnmarshaller();
+			return (TLESetList) unmarsh.unmarshal(is);
 		} catch (JAXBException e) {
-			log.error("JAXB XML error", e);
+			LOG.error("JAXB XML error", e);
 		} catch (IOException e) {
-			log.error("IO Exception", e);
+			LOG.error("IO Exception", e);
 		}
 		return null;
 	}
