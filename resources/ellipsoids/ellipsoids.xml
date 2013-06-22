@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ellipsoids>
+	<ellipsoid name="AIRY">
+		<full_name>AIRY</full_name>
+		<semimajor_axis>6377563.396</semimajor_axis>
+		<semiminor_axis>6356256.910</semiminor_axis>
+		<inverseFlattening>299.3249646</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="GRS67">
+		<full_name>GEODETIC REFERENCE SYSTEM 1967</full_name>
+		<semimajor_axis>6378160</semimajor_axis>
+		<semiminor_axis>6356774.7192</semiminor_axis>
+		<inverseFlattening>298.5</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="BESSEL">
+		<full_name>BESSEL</full_name>
+		<semimajor_axis>6377397.155</semimajor_axis>
+		<semiminor_axis>6356078.9629</semiminor_axis>
+		<inverseFlattening>299.1528128</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="CLARKE66">
+		<full_name>CLARKE 1866</full_name>
+		<semimajor_axis>6378206.4</semimajor_axis>
+		<semiminor_axis>6356583.8</semiminor_axis>
+		<inverseFlattening>294.9786982</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="CLARKE80">
+		<full_name>CLARKE 1880</full_name>
+		<semimajor_axis>6378249.145</semimajor_axis>
+		<semiminor_axis>6356514.8696</semiminor_axis>
+		<inverseFlattening>293.465</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="EVEREST">
+		<full_name>EVEREST</full_name>
+		<semimajor_axis>6377276.34518</semimajor_axis>
+		<semiminor_axis>6356075.41511</semiminor_axis>
+		<inverseFlattening>200.8017</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="GRS80">
+		<full_name>GEODETIC REFERENCE SYSTEM 1980</full_name>
+		<semimajor_axis>6378137</semimajor_axis>
+		<semiminor_axis>6356752.3141</semiminor_axis>
+		<inverseFlattening>298.257222101</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="INTERNATIONAL">
+		<full_name>INTERNATIONAL</full_name>
+		<semimajor_axis>6378388</semimajor_axis>
+		<semiminor_axis>6356911.9462</semiminor_axis>
+		<inverseFlattening>297</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="MAIRY">
+		<full_name>MODIFIED AIRY</full_name>
+		<semimajor_axis>6377340.189</semimajor_axis>
+		<semiminor_axis>6356034.446</semiminor_axis>
+		<inverseFlattening>299.325</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="MEVEREST">
+		<full_name>MODIFIED EVEREST</full_name>
+		<semimajor_axis>6377304.063</semimajor_axis>
+		<semiminor_axis>6356103.039</semiminor_axis>
+		<inverseFlattening>300.8017</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="WGS72">
+		<full_name>WORLD GEODETIC SYSTEM 1972</full_name>
+		<semimajor_axis>6378135</semimajor_axis>
+		<semiminor_axis>6356750.5</semiminor_axis>
+		<inverseFlattening>298.26</inverseFlattening>
+	</ellipsoid>
+	<ellipsoid name="WGS84">
+		<full_name>WORLD GEODETIC SYSTEM 1984</full_name>
+		<semimajor_axis>6378137</semimajor_axis>
+		<semiminor_axis>6356752.314245</semiminor_axis>
+		<inverseFlattening>298.257223563</inverseFlattening>
+	</ellipsoid>
+</ellipsoids>

@@ -11,10 +11,16 @@ sourceSets {
 		java {
 			srcDirs 'src/main'
 		}
+		resources {
+			srcDirs 'resources'
+		}
 	}
 	test {
 		java {
 			srcDirs 'src/tests'
+		}
+		resources {
+			srcDirs 'resources'
 		}
 	}
 }
