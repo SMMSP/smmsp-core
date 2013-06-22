@@ -131,8 +131,8 @@ public class SolarBodies
 			
 			for(final SolarBody body : spl.bodies)
 			{
-				LOG.debug("Found body: " + body.name);
-				solarBodies.put(body.name, body);
+				LOG.debug("Found body: " + body.getName());
+				solarBodies.put(body.getName().trim().toLowerCase(), body);
 			}
 			
 		} catch (JAXBException e) {
@@ -175,7 +175,7 @@ public class SolarBodies
 	protected static class SolarPlanetsList
 	{
 		@XmlElement(name="body")
-		protected List<SolarBody> bodies;
+		protected List<SolarBodyImpl> bodies;
 	}
 	
 }

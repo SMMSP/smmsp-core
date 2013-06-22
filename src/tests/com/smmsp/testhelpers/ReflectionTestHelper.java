@@ -61,11 +61,28 @@ public abstract class ReflectionTestHelper {
 		} catch (SecurityException |
 				IllegalArgumentException |
 				IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return obj;
+	}
+	
+	public static <T, R> void SetPrivateStaticVariable(
+			Class<R> clazz, String variable, T value){
+		try {
+			Field f = clazz.getDeclaredField(variable);
+			boolean accessible = f.isAccessible();
+			f.setAccessible(true);
+			f.set(null, value);
+			f.setAccessible(accessible);
+			
+		} catch ( NoSuchFieldException e){
+			e.printStackTrace();
+		} catch (SecurityException |
+				IllegalArgumentException |
+				IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@SuppressWarnings("unchecked")

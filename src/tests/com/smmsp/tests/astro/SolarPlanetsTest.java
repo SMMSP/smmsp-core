@@ -28,8 +28,9 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import com.smmsp.astro.SolarBody;
+import com.smmsp.astro.AstroException;
 import com.smmsp.astro.SolarBodies;
+import com.smmsp.astro.SolarBody;
 
 /**
  * @author sean
@@ -39,7 +40,7 @@ public class SolarPlanetsTest
 {
 
 	@Test
-	public void test()
+	public void test() throws AstroException
 	{
 		Collection<SolarBody> bodies = SolarBodies.getAllBodies();
 		
@@ -65,6 +66,9 @@ public class SolarPlanetsTest
 			assertTrue(body.getName() + " semimajor axis", body.getSemimajorBodyAxis() != 0);
 			assertTrue(body.getName() + " semiminor axis", body.getSemiminorBodyAxis() != 0);
 		}
+		
+		SolarBody earth = SolarBodies.findByName("Earth");
+		assertNotNull(earth);
 	}
 	
 }
