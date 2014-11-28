@@ -1,14 +1,10 @@
 language: java
 
-before_script:
-  - "wget http://services.gradle.org/distributions/gradle-1.1-bin.zip"
-  - "unzip gradle-1.1-bin.zip > /dev/null"
-script: "gradle-1.1/bin/gradle assemble -S --no-color"
-script: "gradle-1.1/bin/gradle check -S --no-color"
-
 jdk:
  - openjdk7
  - oraclejdk7
+ - oraclejdk8
+ - openjdk8
 
 notifications:
  email:
